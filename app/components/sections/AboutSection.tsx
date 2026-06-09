@@ -1,8 +1,10 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 
+// Fade in block for general content
 function FadeInBlock({
   children,
   className = "",
@@ -13,57 +15,51 @@ function FadeInBlock({
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay }}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay }}
     >
       {children}
     </motion.div>
   );
 }
 
-function BentoBox({
-  children,
-  className = "",
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-}) {
+// Scroll-linked reveal animation for the RIDA text
+function ScrollRevealRida() {
+  const ref = useRef<HTMLDivElement>(null);
+  
+  // Track the scroll progress of this specific container
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 90%", "end 60%"], // Starts when top hits 90% of screen, ends when bottom hits 60%
+  });
+
+  // Transform values based on scroll progress for a wiping reveal effect
+  const clipPath = useTransform(scrollYProgress, [0, 1], ["inset(100% 0 0 0)", "inset(0% 0 0 0)"]);
+  const y = useTransform(scrollYProgress, [0, 1], [150, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
   return (
-    <FadeInBlock
-      delay={delay}
-      className={`group relative overflow-hidden p-8 transition-all duration-500 ${className}`}
-    >
-      {/* Background with glassmorphism feel */}
-      <div
-        className="absolute inset-0 opacity-90 backdrop-blur-md"
+    <div ref={ref} className="w-full flex justify-center pt-20 pb-4">
+      <motion.h2
         style={{
-          background: "var(--surface)",
-          border: "1px solid var(--border-subtle)",
-          borderRadius: "2rem",
+          clipPath,
+          y,
+          opacity,
+          color: "var(--primary)",
+          fontFamily: "var(--font-cormorant-garamond)",
         }}
-      />
-      {/* Subtle hover gradient */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500 pointer-events-none"
-        style={{
-          background: "linear-gradient(135deg, var(--accent) 0%, transparent 100%)",
-          borderRadius: "2rem",
-        }}
-      />
-      
-      <div className="relative z-10 h-full flex flex-col">
-        {children}
-      </div>
-    </FadeInBlock>
+        className="text-[30vw] md:text-[25vw] leading-none font-bold tracking-tighter select-none"
+      >
+        RIDA
+      </motion.h2>
+    </div>
   );
 }
 
@@ -73,239 +69,238 @@ export default function AboutSection() {
       id="about"
       className="relative overflow-hidden"
       style={{
-        paddingTop: "var(--section-py)",
-        paddingBottom: "var(--section-py)",
         background: "var(--background)",
       }}
     >
-      {/* Subtle dot grid background */}
-      <div
-        className="absolute inset-0 opacity-[0.02] pointer-events-none"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 1px 1px, var(--primary) 1px, transparent 0)",
-          backgroundSize: "40px 40px",
-        }}
-      />
-
-      <div className="section-container relative z-10">
-        {/* Header */}
-        <FadeInBlock className="mb-16 md:mb-20">
-          <div className="flex items-center gap-4 mb-6">
+      {/* 1. Introduction Paragraph */}
+      <div className="section-container pt-32 pb-20 md:py-40 relative z-10 border-b border-[var(--border-subtle)]">
+        <FadeInBlock className="max-w-4xl mx-auto text-center">
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <div
+              className="h-px w-12"
+              style={{ background: "var(--accent)", opacity: 0.5 }}
+            />
             <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase shrink-0"
+              className="text-sm font-semibold tracking-[0.2em] uppercase"
               style={{ color: "var(--accent)" }}
             >
-              About Us
+              The Clinic
             </span>
             <div
-              className="h-px w-24"
+              className="h-px w-12"
               style={{ background: "var(--accent)", opacity: 0.5 }}
             />
           </div>
+
           <h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1]"
+            className="text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.2] mb-10"
             style={{
               color: "var(--primary)",
               fontFamily: "var(--font-cormorant-garamond)",
             }}
           >
-            Redefining care <br className="hidden md:block" />
-            <span style={{ color: "var(--text-secondary)" }}>
-              through connection.
+            A Sanctuary for <br className="hidden md:block" />
+            <span className="italic" style={{ color: "var(--accent)" }}>
+              Inner Healing
             </span>
           </h2>
-        </FadeInBlock>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(260px,auto)]">
-          
-          {/* 1. Our Story (Large Cell) */}
-          <BentoBox
-            className="md:col-span-2 lg:col-span-2 lg:row-span-2"
-            delay={0.1}
+          <div
+            className="text-[17px] md:text-[22px] leading-relaxed max-w-3xl mx-auto space-y-6"
+            style={{ color: "var(--text-secondary)" }}
           >
-            <div className="flex flex-col h-full">
+            <p>
+              At Riḍā by Rahma, we believe that everyone deserves access to compassionate and professional mental health support. Led by Clinical Psychologist Rahma, our team provides evidence-based therapy and psychological services in a safe, confidential, and supportive environment.
+            </p>
+            <p>
+              Through personalized care and accessible online consultations, we help individuals navigate challenges, build resilience, and move toward greater emotional well-being.
+            </p>
+          </div>
+        </FadeInBlock>
+      </div>
+
+      {/* 2. HUGE Rida Reveal & Explanation */}
+      <div className="w-full flex flex-col items-center justify-center border-b border-[var(--border-subtle)]" style={{ background: "rgba(106,142,143,0.02)" }}>
+        
+        {/* Animated RIDA text linked to scroll */}
+        <ScrollRevealRida />
+        
+        {/* Explanation Paragraph Below */}
+        <div className="max-w-4xl px-6 pb-24 md:pb-32 text-center relative z-10 -mt-2 md:-mt-6 mx-auto">
+          <FadeInBlock delay={0.2}>
+            <h3 className="text-3xl md:text-4xl font-bold mb-8" style={{ color: "var(--primary)", fontFamily: "var(--font-cormorant-garamond)" }}>
+              Why the name Riḍā?
+            </h3>
+            <div className="space-y-6 text-[17px] md:text-[20px] leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+              <p>
+                Riḍā is an Arabic word that embodies contentment, acceptance, and inner peace. It reflects the belief that true well-being comes not from the absence of struggle, but from developing the strength, understanding, and support needed to navigate it.
+              </p>
+              <p>
+                At Riḍā by Rahma, we are committed to creating a safe and compassionate space where individuals can explore their thoughts, overcome challenges, and build a healthier relationship with themselves. Every session is guided by empathy, evidence-based practice, and a deep respect for each person's unique journey.
+              </p>
+              <p className="italic text-[18px] md:text-[22px] mt-8" style={{ color: "var(--primary)", fontFamily: "var(--font-cormorant-garamond)" }}>
+                Our name serves as a reminder of the destination we hope to help our clients reach: a place of greater balance, healing, and peace within themselves.
+              </p>
+            </div>
+          </FadeInBlock>
+        </div>
+      </div>
+
+      {/* 3. Meet Dr. Rahma & Mission */}
+      <div className="section-container py-24 md:py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-24 md:mb-32">
+          
+          {/* Dr. Rahma Card */}
+          <FadeInBlock delay={0.1} className="flex flex-col">
+            <div
+              className="w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden mb-10 relative group shadow-lg"
+              style={{
+                background: "var(--surface)",
+                border: "1px solid var(--border-subtle)",
+              }}
+            >
+              <Image
+                src="/images/leaf.png"
+                alt="Leaf"
+                fill
+                className="object-contain opacity-[0.05] scale-150 group-hover:scale-125 group-hover:-rotate-6 transition-all duration-1000 ease-out"
+              />
+              <div className="absolute inset-0 flex items-center justify-center text-[var(--primary)]/40 font-semibold tracking-wider uppercase text-sm z-10 backdrop-blur-[1px]">
+                [Photo Placeholder]
+              </div>
+            </div>
+            
+            <div
+              className="text-xs font-bold uppercase tracking-widest mb-4"
+              style={{ color: "var(--accent)" }}
+            >
+              Lead Psychiatrist
+            </div>
+            <h3
+              className="text-4xl md:text-5xl font-bold mb-6"
+              style={{
+                color: "var(--primary)",
+                fontFamily: "var(--font-cormorant-garamond)",
+              }}
+            >
+              Meet Dr. Rahma
+            </h3>
+            <p
+              className="text-[16px] md:text-[18px] leading-relaxed"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              [Dummy Content] Dr. Rahma is a board-certified professional with a profound dedication to mental wellness. With years of clinical experience, she brings a warm, empathetic, and evidence-based approach to help individuals navigate life's complexities.
+            </p>
+          </FadeInBlock>
+
+          {/* Mission & Extra info */}
+          <div className="flex flex-col justify-center space-y-16">
+            <FadeInBlock delay={0.2}>
               <h3
-                className="text-3xl font-bold mb-6"
+                className="text-4xl font-bold mb-6"
                 style={{
                   color: "var(--primary)",
                   fontFamily: "var(--font-cormorant-garamond)",
                 }}
               >
-                Where It All Began
+                Our Mission
               </h3>
-              
-              <div className="space-y-5 flex-grow">
-                <p
-                  className="text-[15px] leading-relaxed"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  Founded with a vision to make mental health care accessible to
-                  everyone, we&apos;ve grown from a dedicated individual practice into a
-                  trusted partner for wellness worldwide.
-                </p>
-                <div
-                  className="pl-5 py-1"
-                  style={{ borderLeft: "2px solid var(--accent)" }}
-                >
-                  <p
-                    className="text-base italic leading-relaxed"
-                    style={{
-                      color: "var(--primary)",
-                      fontFamily: "var(--font-cormorant-garamond)",
-                    }}
-                  >
-                    &ldquo;We believe everyone deserves access to compassionate,
-                    expert psychiatric care — no matter where they are.&rdquo;
-                  </p>
-                </div>
-              </div>
-
-              {/* Stats Row */}
-              <div
-                className="mt-8 pt-6 grid grid-cols-2 gap-4"
-                style={{ borderTop: "1px solid var(--border-subtle)" }}
-              >
-                <div>
-                  <div
-                    className="text-3xl font-bold mb-1"
-                    style={{ color: "var(--calm-accent)" }}
-                  >
-                    10+
-                  </div>
-                  <div
-                    className="text-[11px] font-medium uppercase tracking-wider"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    Years
-                  </div>
-                </div>
-                <div>
-                  <div
-                    className="text-3xl font-bold mb-1"
-                    style={{ color: "var(--calm-accent)" }}
-                  >
-                    500+
-                  </div>
-                  <div
-                    className="text-[11px] font-medium uppercase tracking-wider"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    Projects
-                  </div>
-                </div>
-              </div>
-            </div>
-          </BentoBox>
-
-          {/* 2. Vision */}
-          <BentoBox
-            className="md:col-span-1 lg:col-span-2 lg:row-span-1"
-            delay={0.2}
-          >
-            <div className="flex flex-col h-full">
-              <div className="flex items-center gap-4 mb-5">
-                <div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
-                  style={{
-                    background: "rgba(106,142,143,0.1)",
-                    color: "var(--calm-accent)",
-                  }}
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                  </svg>
-                </div>
-                <h3
-                  className="text-2xl font-bold"
-                  style={{ color: "var(--primary)" }}
-                >
-                  Our Vision
-                </h3>
-              </div>
               <p
-                className="text-[15px] leading-relaxed flex-grow"
+                className="text-[16px] md:text-[18px] leading-relaxed"
                 style={{ color: "var(--text-secondary)" }}
               >
-                To be recognized as a global leader in our field, setting industry
-                standards and inspiring positive change. We envision a future where
-                our innovative solutions make a meaningful difference.
+                [Dummy Content] To empower individuals on their wellness journey by providing accessible, personalized, and deeply compassionate care that transforms lives.
               </p>
-            </div>
-          </BentoBox>
+            </FadeInBlock>
 
-          {/* 3. Mission */}
-          <BentoBox
-            className="md:col-span-1 lg:col-span-1 lg:row-span-1 flex flex-col justify-between"
-            delay={0.3}
-          >
-            <div className="flex flex-col h-full">
+            <FadeInBlock
+              delay={0.3}
+              className="p-10 md:p-14 rounded-[2.5rem] relative overflow-hidden group shadow-lg transition-transform duration-500 hover:-translate-y-2"
+              style={{
+                background: "var(--surface)",
+                border: "1px solid var(--border-subtle)",
+              }}
+            >
+              <div className="absolute top-0 right-0 w-48 h-48 opacity-[0.03] pointer-events-none -mr-10 -mt-10 group-hover:rotate-12 transition-transform duration-1000">
+                <Image
+                  src="/images/leaf.png"
+                  alt="Leaf"
+                  fill
+                  className="object-contain rotate-45"
+                />
+              </div>
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center mb-5"
+                className="text-6xl mb-4 font-serif leading-none"
+                style={{ color: "var(--accent)" }}
+              >
+                “
+              </div>
+              <p
+                className="text-2xl md:text-3xl italic leading-relaxed relative z-10"
                 style={{
-                  background: "rgba(122,158,159,0.1)",
-                  color: "var(--accent)",
+                  color: "var(--primary)",
+                  fontFamily: "var(--font-cormorant-garamond)",
                 }}
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
+                [Dummy Content] "We believe everyone deserves access to compassionate, expert psychiatric care — no matter where they are."
+              </p>
+            </FadeInBlock>
+          </div>
+        </div>
+
+        {/* 4. Our Approach */}
+        <FadeInBlock
+          delay={0.2}
+          className="relative rounded-[3rem] overflow-hidden shadow-2xl p-10 md:p-16 lg:p-24"
+          style={{ background: "var(--primary)", color: "white" }}
+        >
+          <Image
+            src="/images/leaf.png"
+            alt="Leaf Pattern"
+            fill
+            className="object-cover opacity-10 mix-blend-overlay scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary)] to-transparent mix-blend-multiply opacity-50" />
+
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div>
               <h3
-                className="text-xl font-bold mb-3"
-                style={{ color: "var(--primary)" }}
+                className="text-4xl md:text-6xl font-bold mb-6"
+                style={{ fontFamily: "var(--font-cormorant-garamond)" }}
               >
-                Mission
+                Our Approach
               </h3>
-              <p
-                className="text-[14px] leading-relaxed"
-                style={{ color: "var(--text-secondary)" }}
-              >
-                To deliver exceptional solutions that empower our clients to
-                achieve their goals.
+              <p className="text-lg md:text-xl leading-relaxed opacity-90 mb-10">
+                [Dummy Content] We integrate cutting-edge, evidence-based practices with a genuinely holistic view of health. By treating the whole person rather than just the symptoms, we co-create sustainable strategies for lifelong well-being.
               </p>
             </div>
-          </BentoBox>
 
-          {/* 4. Core Values */}
-          <BentoBox
-            className="md:col-span-1 lg:col-span-1 lg:row-span-1"
-            delay={0.4}
-          >
-            <h3
-              className="text-xl font-bold mb-5"
-              style={{ color: "var(--primary)" }}
-            >
-              Values
-            </h3>
-            <ul className="space-y-4">
-              {[
-                { name: "Excellence", icon: "✨" },
-                { name: "Integrity", icon: "🛡️" },
-                { name: "Innovation", icon: "💡" },
-                { name: "Collaboration", icon: "🤝" },
-              ].map((val) => (
-                <li key={val.name} className="flex items-center gap-3">
-                  <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-sm shadow-sm"
-                    style={{ background: "var(--background)" }}
-                  >
-                    {val.icon}
-                  </div>
-                  <span
-                    className="text-[14px] font-semibold"
-                    style={{ color: "var(--primary)" }}
-                  >
-                    {val.name}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </BentoBox>
-
-        </div>
+            <div className="space-y-6">
+              <div className="p-8 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 transition-all hover:bg-white/10 hover:-translate-y-1">
+                <h4
+                  className="font-bold text-2xl mb-3"
+                  style={{ fontFamily: "var(--font-cormorant-garamond)" }}
+                >
+                  Holistic View
+                </h4>
+                <p className="text-[16px] opacity-80 leading-relaxed">
+                  Mind, body, and spirit connection tailored to your life.
+                </p>
+              </div>
+              <div className="p-8 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 transition-all hover:bg-white/10 hover:-translate-y-1">
+                <h4
+                  className="font-bold text-2xl mb-3"
+                  style={{ fontFamily: "var(--font-cormorant-garamond)" }}
+                >
+                  Evidence-Based
+                </h4>
+                <p className="text-[16px] opacity-80 leading-relaxed">
+                  Rooted in modern science and proven methodologies.
+                </p>
+              </div>
+            </div>
+          </div>
+        </FadeInBlock>
       </div>
     </section>
   );

@@ -19,16 +19,23 @@ const DecorativeLeaf = ({
     className={`pointer-events-none ${className}`}
     style={{
       ...style,
-      transform: `rotate(${rotation}deg)`,
       filter: "blur(0.5px)",
     }}
   >
-    <Image 
-      src="/images/leaf.png" 
-      alt="Decorative Maple Leaf Watermark" 
-      fill 
-      className="object-contain"
-    />
+    <div 
+      className="w-full h-full"
+      style={{ transform: `rotate(${rotation}deg)` }}
+    >
+      <div className="relative w-full h-full transition-transform duration-1000 ease-out group-hover:scale-110 group-hover:-rotate-3">
+        <Image 
+          src="/images/leaf.png" 
+          alt="Decorative Maple Leaf Watermark" 
+          fill 
+          sizes="(max-width: 768px) 100vw, 320px"
+          className="object-contain"
+        />
+      </div>
+    </div>
   </div>
 );
 
@@ -156,7 +163,7 @@ export default function TrustSection() {
             return (
               <motion.div 
                 key={index}
-                className={`relative overflow-hidden p-8 md:p-10 flex flex-col justify-between ${
+                className={`group relative overflow-hidden p-8 md:p-10 flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${
                   isTall ? 'lg:row-span-2 lg:col-start-3 lg:row-start-1 h-full min-h-[400px]' : ''
                 }`}
                 style={{
