@@ -1,43 +1,43 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-// Single Elegant Maple Leaf Illustration (Using the provided watercolor image)
-const DecorativeLeaf = ({ 
-  className, 
-  style, 
-  rotation = 0 
-}: { 
-  className?: string, 
-  style?: React.CSSProperties,
-  rotation?: number 
-}) => (
-  <div 
-    className={`pointer-events-none ${className}`}
-    style={{
-      ...style,
-      filter: "blur(0.5px)",
-    }}
-  >
+const RevealOnScroll = ({ children, className = "", slideUp = false }: { children: React.ReactNode, className?: string, slideUp?: boolean }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: "-50px" }
+    );
+
+    if (ref.current) observer.observe(ref.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const baseClasses = `duration-700 ease-out h-full ${slideUp ? "transform-gpu" : ""}`;
+  const transitionClass = slideUp ? "transition-[opacity,transform]" : "transition-opacity";
+  const hiddenClasses = slideUp ? "opacity-0 translate-y-8" : "opacity-0";
+  const visibleClasses = slideUp ? "opacity-100 translate-y-0" : "opacity-100";
+
+  return (
     <div 
-      className="w-full h-full"
-      style={{ transform: `rotate(${rotation}deg)` }}
+      ref={ref} 
+      className={`${baseClasses} ${transitionClass} ${isVisible ? visibleClasses : hiddenClasses} ${className}`}
+      style={slideUp ? { willChange: "opacity, transform" } : {}}
     >
-      <div className="relative w-full h-full transition-transform duration-1000 ease-out group-hover:scale-110 group-hover:-rotate-3">
-        <Image 
-          src="/images/leaf.png" 
-          alt="Decorative Maple Leaf Watermark" 
-          fill 
-          sizes="(max-width: 768px) 100vw, 320px"
-          className="object-contain"
-        />
-      </div>
+      {children}
     </div>
-  </div>
-);
+  );
+};
 
 const trustItems = [
   {
@@ -47,11 +47,7 @@ const trustItems = [
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
       </svg>
-    ),
-    isTall: false,
-    leafRotation: 15,
-    leafPosition: "absolute -top-12 -right-10",
-    iconColor: "#D98A5F" // Warm Orange
+    )
   },
   {
     title: "100% Confidential & Secure Sessions",
@@ -60,11 +56,7 @@ const trustItems = [
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
       </svg>
-    ),
-    isTall: false,
-    leafRotation: -20,
-    leafPosition: "absolute -bottom-10 -left-10",
-    iconColor: "#D98A5F" // Warm Orange
+    )
   },
   {
     title: "Evidence-Based & Ethical Approaches",
@@ -73,11 +65,7 @@ const trustItems = [
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
       </svg>
-    ),
-    isTall: false,
-    leafRotation: 40,
-    leafPosition: "absolute -bottom-8 -left-8",
-    iconColor: "#D98A5F" // Warm Orange
+    )
   },
   {
     title: "Comprehensive Assessments",
@@ -86,11 +74,7 @@ const trustItems = [
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
       </svg>
-    ),
-    isTall: false,
-    leafRotation: -35,
-    leafPosition: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-    iconColor: "#D98A5F" // Warm Orange
+    )
   },
   {
     title: "Flexible Online & In-Person Options",
@@ -99,146 +83,86 @@ const trustItems = [
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
-    ),
-    isTall: true,
-    leafRotation: 25,
-    leafPosition: "absolute -bottom-16 -right-10",
-    iconColor: "#ffffff" // White for dark card
+    )
   }
 ];
 
 export default function TrustSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
     <section 
       id="trust" 
-      className="relative"
-      style={{
-        paddingTop: "var(--section-py)",
-        paddingBottom: "var(--section-py)",
-        background: "var(--background)",
-      }}
+      className="relative p-4 md:p-6 lg:p-8"
+      style={{ background: "var(--background)" }}
     >
-      <div className="section-container">
-        
-        {/* Header section before the bento grid */}
-        <motion.div 
-          className="mb-16 md:mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          <div className="flex items-center gap-4 mb-6">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase shrink-0"
-              style={{ color: "var(--accent)" }}
-            >
-              Trust & Safety
-            </span>
-            <div
-              className="h-px w-24"
-              style={{ background: "var(--accent)", opacity: 0.5 }}
-            />
-          </div>
-          
-          <h2 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1]"
-            style={{ 
-              color: "var(--primary)",
-              fontFamily: "var(--font-cormorant-garamond)",
-            }}
-          >
-            Your Care, <br className="hidden md:block" />
-            <span style={{ color: "var(--text-secondary)" }}>Our Commitment.</span>
-          </h2>
-        </motion.div>
+      <div className="relative rounded-[2.5rem] md:rounded-[3rem] overflow-hidden w-full mx-auto shadow-xl">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/images/trust-bg.jpg"
+            alt="Trust Section Background"
+            fill
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-black/40"></div>
+        </div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" ref={ref}>
-          {trustItems.map((item, index) => {
-            const isTall = item.isTall;
+        <div className="relative z-10 py-16 md:py-24 px-6 md:px-12 lg:px-20">
+          
+          {/* Header section before the grid */}
+          <RevealOnScroll slideUp className="relative mb-16 md:mb-20 text-center md:text-left">
+            <div className="flex items-center justify-center md:justify-start gap-4 mb-6">
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase shrink-0 text-white/90">
+                Trust & Safety
+              </span>
+              <div className="h-px w-24 bg-white/40" />
+            </div>
             
-            return (
-              <motion.div 
-                key={index}
-                className={`group relative overflow-hidden p-8 md:p-10 flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${
-                  isTall ? 'lg:row-span-2 lg:col-start-3 lg:row-start-1 h-full min-h-[400px]' : ''
-                }`}
-                style={{
-                  background: isTall ? "var(--primary)" : "var(--surface)",
-                  borderRadius: "1.5rem",
-                  border: isTall ? "none" : "1px solid var(--border-subtle)",
-                  boxShadow: isTall ? "0 20px 40px rgba(31,31,31,0.15)" : "none",
-                  color: isTall ? "white" : "var(--primary)"
-                }}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-              >
-                {/* Decorative Design System Leaf */}
-                <DecorativeLeaf 
-                  className={`${item.leafPosition} pointer-events-none ${
-                    isTall ? "w-80 h-80" : "w-64 h-64"
-                  }`}
-                  rotation={item.leafRotation}
-                  style={{
-                    opacity: isTall ? 0.3 : 0.25, // Increased opacity for better visibility
-                    zIndex: 0
-                  }}
-                />
-                
-                <div className="relative z-10 flex flex-col h-full">
+            <h2 
+              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] text-white"
+              style={{ fontFamily: "var(--font-cormorant-garamond)" }}
+            >
+              Your Care, <br className="hidden md:block" />
+              <span className="text-white/80">Our Commitment.</span>
+            </h2>
+          </RevealOnScroll>
+
+          {/* Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {trustItems.map((item, index) => {
+              return (
+                <RevealOnScroll key={index}>
                   <div 
-                    className={`w-14 h-14 rounded-full flex items-center justify-center mb-6 shrink-0 ${
-                      isTall ? 'bg-white/10 text-white' : 'border border-[var(--border-subtle)]'
-                    }`}
-                    style={isTall ? {} : {
-                      color: item.iconColor,
-                      backgroundColor: `${item.iconColor}15` // 15% opacity background tint
+                    className="group h-full relative p-6 md:p-8 flex flex-col transition-colors duration-500 hover:bg-black/40 border border-white/50 rounded-[1.5rem] text-white"
+                    style={{
+                      background: "rgba(255, 255, 255, 0.08)",
+                      backdropFilter: "blur(20px)",
+                      WebkitBackdropFilter: "blur(20px)",
                     }}
                   >
-                    {item.icon}
-                  </div>
-                  
-                  <div className="flex-grow">
-                    <h4 
-                      className={`${isTall ? 'text-3xl lg:text-4xl' : 'text-xl'} font-bold mb-4`}
-                      style={{ 
-                        fontFamily: isTall ? "var(--font-cormorant-garamond)" : "inherit"
-                      }}
-                    >
-                      {item.title}
-                    </h4>
-                    <p 
-                      className={`${isTall ? 'text-white/80 text-[16px]' : 'text-[var(--text-secondary)] text-[15px]'} leading-relaxed`}
-                    >
-                      {item.description}
-                    </p>
-                  </div>
-
-                  {isTall && (
-                    <div className="mt-10">
-                      <button className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 hover:scale-105"
-                        style={{
-                          background: "var(--accent)",
-                          color: "white"
-                        }}
-                      >
-                        Start Your Journey
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                      </button>
+                    <div className="flex justify-between items-start mb-6">
+                      <h4 className="text-lg md:text-xl font-bold text-white pr-4">
+                        {item.title}
+                      </h4>
+                      <div className="text-white shrink-0">
+                        <div className="w-8 h-8 flex items-center justify-center">
+                          {item.icon}
+                        </div>
+                      </div>
                     </div>
-                  )}
-                </div>
-              </motion.div>
-            );
-          })}
+                    
+                    <div className="flex-grow">
+                      <p className="text-white text-[14px] md:text-[15px] leading-relaxed font-medium">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                </RevealOnScroll>
+              );
+            })}
+          </div>
+          
         </div>
-        
       </div>
     </section>
   );
