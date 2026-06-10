@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* ══════════════════════════════════════════
+   1. CSS CUSTOM PROPERTIES (Design Tokens)
+   ══════════════════════════════════════════ */
+
 :root {
   /* ── Color Palette ── */
   --primary: #1F1F1F;             /* Text Primary / Dark */
@@ -38,10 +42,21 @@
   --card-foreground: var(--primary);
 
   /* Interactive states */
-  --primary-hover: #333333;       /* Slightly lighter dark for hover */
-  --accent-hover: #6A8E8F;       /* Darker teal for hover */
-  --calm-accent-hover: #5A7E7F;  /* Even deeper teal */
+  --primary-hover: #333333;
+  --accent-hover: #6A8E8F;
+  --calm-accent-hover: #5A7E7F;
+
+  /* ── Spacing & Layout ── */
+  --section-px: clamp(1.5rem, 4vw, 4rem);
+  --section-py: clamp(5rem, 8vw, 8rem);
+  --card-radius: 1.25rem;
+  --card-shadow: 0 4px 24px rgba(31, 31, 31, 0.06), 0 1.5px 6px rgba(31, 31, 31, 0.04);
+  --card-shadow-hover: 0 12px 40px rgba(31, 31, 31, 0.10), 0 4px 12px rgba(31, 31, 31, 0.06);
 }
+
+/* ══════════════════════════════════════════
+   2. TAILWIND v4 THEME REGISTRATION
+   ══════════════════════════════════════════ */
 
 @theme inline {
   /* Base colors */
@@ -73,73 +88,27 @@
   --font-quicksand: var(--font-quicksand);
 }
 
+/* ══════════════════════════════════════════
+   3. BASE STYLES
+   ══════════════════════════════════════════ */
+
+* {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-quicksand), 'Quicksand', sans-serif;
 }
 
-/* Font utility classes */
 .font-quicksand {
   font-family: var(--font-quicksand), 'Quicksand', sans-serif;
 }
 
-/* Utility Classes for Easy Color Usage */
-.bg-primary { background-color: var(--primary); }
-.bg-accent { background-color: var(--accent); }
-.bg-calm-accent { background-color: var(--calm-accent); }
-.bg-secondary { background-color: var(--secondary-bg); }
-.bg-soft { background-color: var(--background); }
-
-.text-primary { color: var(--primary); }
-.text-accent { color: var(--accent); }
-.text-calm-accent { color: var(--calm-accent); }
-.text-muted { color: var(--muted); }
-
-.border-primary { border-color: var(--primary); }
-.border-accent { border-color: var(--accent); }
-.border-calm-accent { border-color: var(--calm-accent); }
-.border-default { border-color: var(--border); }
-
-/* Interactive Elements */
-.btn-primary {
-  background-color: var(--accent);
-  color: var(--text-inverse);
-  transition: background-color 0.2s ease;
-}
-
-.btn-primary:hover {
-  background-color: var(--accent-hover);
-}
-
-.btn-accent {
-  background-color: var(--accent);
-  color: var(--text-inverse);
-  transition: background-color 0.2s ease;
-}
-
-.btn-accent:hover {
-  background-color: var(--accent-hover);
-}
-
-.btn-calm {
-  background-color: var(--calm-accent);
-  color: var(--text-inverse);
-  transition: background-color 0.2s ease;
-}
-
-.btn-calm:hover {
-  background-color: var(--calm-accent-hover);
-}
-
-/* ── Spacing & Layout Tokens ── */
-:root {
-  --section-px: clamp(1.5rem, 4vw, 4rem);
-  --section-py: clamp(5rem, 8vw, 8rem);
-  --card-radius: 1.25rem;         /* 20px — uniform across all cards */
-  --card-shadow: 0 4px 24px rgba(31, 31, 31, 0.06), 0 1.5px 6px rgba(31, 31, 31, 0.04);
-  --card-shadow-hover: 0 12px 40px rgba(31, 31, 31, 0.10), 0 4px 12px rgba(31, 31, 31, 0.06);
-}
+/* ══════════════════════════════════════════
+   4. LAYOUT COMPONENTS
+   ══════════════════════════════════════════ */
 
 /* Uniform section container */
 .section-container {
@@ -150,7 +119,10 @@ body {
   padding-right: var(--section-px);
 }
 
-/* Card Components */
+/* ══════════════════════════════════════════
+   5. CARD COMPONENTS
+   ══════════════════════════════════════════ */
+
 .card {
   background-color: var(--card);
   border: 1px solid var(--border);
@@ -170,8 +142,441 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Focus states for accessibility */
+/* ══════════════════════════════════════════
+   6. BUTTON COMPONENTS
+   ══════════════════════════════════════════ */
+
+.btn-primary {
+  background-color: var(--accent);
+  color: var(--text-inverse);
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+}
+
+.btn-calm {
+  background-color: var(--calm-accent);
+  color: var(--text-inverse);
+  transition: background-color 0.2s ease;
+}
+
+.btn-calm:hover {
+  background-color: var(--calm-accent-hover);
+}
+
+/* Button ripple effect */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-ripple:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Button hover shine effect */
+.btn-primary,
+.btn-calm {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before,
+.btn-calm::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.btn-primary:hover::before,
+.btn-calm:hover::before {
+  left: 100%;
+}
+
+/* ══════════════════════════════════════════
+   7. FORM ELEMENTS
+   ══════════════════════════════════════════ */
+
+.input-autumn {
+  background-color: var(--input-bg, #FFFFFF);
+  border: 1px solid var(--input-border, #DCDCDC);
+  color: var(--foreground);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-autumn:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(122, 158, 159, 0.15);
+}
+
+.input-autumn::placeholder {
+  color: rgba(31, 31, 31, 0.4);
+}
+
+/* ══════════════════════════════════════════
+   8. GRADIENT UTILITIES
+   ══════════════════════════════════════════ */
+
+.gradient-autumn {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+}
+
+.gradient-calm {
+  background: linear-gradient(135deg, var(--calm-accent) 0%, var(--secondary-bg) 100%);
+}
+
+.gradient-warm {
+  background: linear-gradient(135deg, var(--background) 0%, var(--secondary-bg) 100%);
+}
+
+/* Shadow utilities */
+.shadow-3xl {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 
+              0 10px 30px -5px rgba(31, 31, 31, 0.15);
+}
+
+/* Gradient text animation */
+.gradient-text {
+  background: linear-gradient(-45deg, var(--accent), var(--calm-accent), var(--accent), var(--highlight-soft, #E8E1D9));
+  background-size: 400% 400%;
+  animation: gradient-shift 4s ease-in-out infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Status colors */
+.status-success { color: var(--accent); }
+.status-warning { color: #E0A458; }
+.status-error { color: #D45B5B; }
+
+/* ══════════════════════════════════════════
+   9. NAVBAR STYLES
+   ══════════════════════════════════════════ */
+
+.navbar-autumn {
+  background-color: rgba(250, 249, 246, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(229, 229, 229, 0.3);
+  animation: slideInDown 0.6s ease-out;
+}
+
+/* Nav link hover effects */
+.nav-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(122, 158, 159, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.nav-link:hover::before {
+  left: 100%;
+}
+
+/* Active link indicator animation */
+.nav-link-active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  height: 2px;
+  background-color: var(--accent);
+  animation: expandWidth 0.3s ease-out;
+}
+
+/* Scroll progress indicator */
+.scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--calm-accent));
+  transition: width 0.3s ease;
+  z-index: 60;
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════════
+   10. HERO SECTION STYLES
+   ══════════════════════════════════════════ */
+
+.hero-section {
+  background: linear-gradient(135deg, var(--background) 0%, var(--secondary-bg) 100%);
+}
+
+.hero-pattern {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(122, 158, 159, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(106, 142, 143, 0.08) 0%, transparent 50%);
+}
+
+.trust-indicator:hover {
+  transform: translateY(-2px);
+  transition: transform 0.3s ease;
+}
+
+/* ══════════════════════════════════════════
+   11. FOOTER STYLES
+   ══════════════════════════════════════════ */
+
+.footer-autumn {
+  background-color: var(--primary);
+  color: var(--background);
+}
+
+/* ══════════════════════════════════════════
+   12. NAVBAR VARIANTS (Glass, Dock, etc.)
+   ══════════════════════════════════════════ */
+
+/* Glass Morphism */
+.glass-nav {
+  background: rgba(250, 249, 246, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(229, 229, 229, 0.3);
+}
+
+.glass-nav:hover {
+  background: rgba(250, 249, 246, 0.9);
+}
+
+.glass-button {
+  background: rgba(250, 249, 246, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(122, 158, 159, 0.3);
+}
+
+/* Dock */
+.dock-container {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08), 
+              0 8px 25px rgba(31, 31, 31, 0.06),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.dock-item {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
+}
+
+.dock-item:hover {
+  animation: dock-bounce 0.3s ease;
+}
+
+.dock-logo {
+  box-shadow: 0 8px 25px rgba(31, 31, 31, 0.15);
+}
+
+.dock-cta {
+  box-shadow: 0 4px 15px rgba(122, 158, 159, 0.3);
+}
+
+/* ══════════════════════════════════════════
+   13. KEYFRAME ANIMATIONS
+   ══════════════════════════════════════════ */
+
+@keyframes slideInDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes expandWidth {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+@keyframes fadeInUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-10px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%      { transform: translateY(-20px) rotate(1deg); }
+  66%      { transform: translateY(-10px) rotate(-1deg); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%      { transform: translateY(-15px) rotate(2deg); }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(122, 158, 159, 0.3); }
+  50%      { box-shadow: 0 0 30px rgba(122, 158, 159, 0.6); }
+}
+
+@keyframes dock-bounce {
+  0%   { transform: scale(1) translateY(0); }
+  50%  { transform: scale(1.1) translateY(-5px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+  50%      { opacity: 1; transform: translateX(-50%) scale(1.1); }
+}
+
+/* Mobile menu stagger animation */
+.mobile-menu-item {
+  animation: fadeInUp 0.3s ease-out forwards;
+}
+
+/* ══════════════════════════════════════════
+   14. SCROLLBAR CUSTOMIZATION
+   ══════════════════════════════════════════ */
+
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: var(--secondary-bg);
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--calm-accent);
+}
+
+/* ══════════════════════════════════════════
+   15. ACCESSIBILITY
+   ══════════════════════════════════════════ */
+
+/* Focus states */
 .focus-ring:focus {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .hero-overlay {
+    background: rgba(31, 31, 31, 0.9);
+  }
+  
+  .hero-text {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse,
+  .animate-bounce,
+  .floating-elements * {
+    animation: none;
+  }
+  
+  .hero-content {
+    transition: none;
+  }
+}
+
+/* ══════════════════════════════════════════
+   16. RESPONSIVE ADJUSTMENTS
+   ══════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .navbar-autumn {
+    padding: 0.75rem 0;
+  }
+  
+  .mobile-menu-item:nth-child(1) { animation-delay: 0.1s; }
+  .mobile-menu-item:nth-child(2) { animation-delay: 0.15s; }
+  .mobile-menu-item:nth-child(3) { animation-delay: 0.2s; }
+  .mobile-menu-item:nth-child(4) { animation-delay: 0.25s; }
+  .mobile-menu-item:nth-child(5) { animation-delay: 0.3s; }
+  .mobile-menu-item:nth-child(6) { animation-delay: 0.35s; }
+
+  .glass-nav {
+    margin: 0 1rem;
+    border-radius: 1rem;
+  }
+  
+  .dock-container {
+    padding: 0.5rem;
+    border-radius: 1.5rem;
+  }
+  
+  .dock-item {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .hero-content {
+    padding: 2rem 1rem;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .trust-indicators {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }

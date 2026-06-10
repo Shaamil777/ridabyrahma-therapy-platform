@@ -8,49 +8,9 @@ import React, {
   useCallback,
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const teamMembers = [
-  {
-    id: 1,
-    name: "Dr. Sarah Chen",
-    role: "Clinical Psychologist",
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80",
-    shortBio: "Specializing in anxiety, depression, and stress management.",
-    fullBio: "Dr. Sarah Chen brings over 15 years of clinical experience helping individuals navigate anxiety, depression, and major life transitions. She utilizes Evidence-Based treatments including CBT and mindfulness-based cognitive therapy to empower her clients toward sustainable mental well-being.",
-    specialties: ["Anxiety & Panic", "Depression", "Stress Management"],
-    education: "Ph.D. in Clinical Psychology, Stanford University"
-  },
-  {
-    id: 2,
-    name: "Dr. Marcus Johnson",
-    role: "Psychiatrist",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80",
-    shortBio: "Expert in adult psychiatry and medication management.",
-    fullBio: "Dr. Marcus Johnson is board-certified in general psychiatry with a focus on comprehensive psychiatric evaluations and personalized medication management. He believes in a holistic approach, often collaborating with therapists to ensure patients receive well-rounded care.",
-    specialties: ["Medication", "Mood Disorders", "ADHD"],
-    education: "M.D., Harvard Medical School"
-  },
-  {
-    id: 3,
-    name: "Emily Williams, LCSW",
-    role: "Clinical Social Worker",
-    image: "https://images.unsplash.com/photo-1594824432258-f24fa9343ee4?w=800&q=80",
-    shortBio: "Focuses on trauma-informed care and relationship counseling.",
-    fullBio: "Emily Williams specializes in trauma-informed care and couples relationship counseling. With a warm and empathetic approach, Emily creates a safe space for clients to explore past traumas, work through relationship conflicts, and rebuild trust and connection.",
-    specialties: ["Couples Therapy", "Trauma & PTSD", "Family Dynamics"],
-    education: "MSW, University of Michigan"
-  },
-  {
-    id: 4,
-    name: "Dr. James Wilson",
-    role: "Adolescent Psychologist",
-    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=800&q=80",
-    shortBio: "Dedicated to helping youth navigate developmental challenges.",
-    fullBio: "Dr. James Wilson has dedicated his career to supporting children, adolescents, and their families. He uses play therapy, CBT, and family counseling to address behavioral issues, school-related anxiety, and early-stage mood disorders in a child-friendly environment.",
-    specialties: ["Child Psychology", "Teen Issues", "Behavioral"],
-    education: "Psy.D., Rutgers University"
-  }
-];
+import SectionHeader from "@/app/components/ui/SectionHeader";
+import Icon from "@/app/components/ui/Icons";
+import { teamMembers } from "@/app/data/team";
 
 function calculateGap(width: number) {
   const minWidth = 1024;
@@ -73,10 +33,10 @@ export default function TeamSection() {
   const [containerWidth, setContainerWidth] = useState(1200);
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
-  const autoplayIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const autoplayIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const testimonialsLength = useMemo(() => teamMembers.length, []);
-  const activeTestimonial = useMemo(
+  const totalMembers = teamMembers.length;
+  const activeMember = useMemo(
     () => teamMembers[activeIndex],
     [activeIndex]
   );
@@ -97,24 +57,24 @@ export default function TeamSection() {
   useEffect(() => {
     if (autoplay) {
       autoplayIntervalRef.current = setInterval(() => {
-        setActiveIndex((prev) => (prev + 1) % testimonialsLength);
-      }, 7000); // 7 seconds to allow enough reading time
+        setActiveIndex((prev) => (prev + 1) % totalMembers);
+      }, 7000);
     }
     return () => {
       if (autoplayIntervalRef.current) clearInterval(autoplayIntervalRef.current);
     };
-  }, [autoplay, testimonialsLength]);
+  }, [autoplay, totalMembers]);
 
   // Navigation handlers
   const handleNext = useCallback(() => {
-    setActiveIndex((prev) => (prev + 1) % testimonialsLength);
+    setActiveIndex((prev) => (prev + 1) % totalMembers);
     if (autoplayIntervalRef.current) clearInterval(autoplayIntervalRef.current);
-  }, [testimonialsLength]);
+  }, [totalMembers]);
 
   const handlePrev = useCallback(() => {
-    setActiveIndex((prev) => (prev - 1 + testimonialsLength) % testimonialsLength);
+    setActiveIndex((prev) => (prev - 1 + totalMembers) % totalMembers);
     if (autoplayIntervalRef.current) clearInterval(autoplayIntervalRef.current);
-  }, [testimonialsLength]);
+  }, [totalMembers]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -124,16 +84,15 @@ export default function TeamSection() {
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-    // eslint-disable-next-line
-  }, [activeIndex, testimonialsLength]);
+  }, [handlePrev, handleNext]);
 
   // Compute transforms for each image
   function getImageStyle(index: number): React.CSSProperties {
     const gap = calculateGap(containerWidth);
     const maxStickUp = gap * 0.8;
     const isActive = index === activeIndex;
-    const isLeft = (activeIndex - 1 + testimonialsLength) % testimonialsLength === index;
-    const isRight = (activeIndex + 1) % testimonialsLength === index;
+    const isLeft = (activeIndex - 1 + totalMembers) % totalMembers === index;
+    const isRight = (activeIndex + 1) % totalMembers === index;
 
     const baseRadius = "var(--card-radius)";
     const baseShadow = "var(--card-shadow)";
@@ -192,28 +151,7 @@ export default function TeamSection() {
     <section id="team" className="w-full relative overflow-hidden" style={{ background: "var(--background)", paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
       {/* ── Section Header ── */}
       <div className="section-container mb-16 md:mb-24">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="flex flex-col items-center justify-center text-center"
-        >
-          <div className="flex items-center gap-5 mb-6">
-             <div className="w-12 h-[1px]" style={{ background: "var(--border-subtle)" }} />
-             <span className="text-[10px] md:text-xs font-semibold tracking-[0.2em] md:tracking-[0.25em] uppercase" style={{ color: "var(--accent)" }}>
-               Our Care Professionals
-             </span>
-             <div className="w-12 h-[1px]" style={{ background: "var(--border-subtle)" }} />
-          </div>
-          
-          <h2 
-            className="text-4xl md:text-5xl lg:text-7xl font-bold max-w-2xl" 
-            style={{ fontFamily: "var(--font-cormorant-garamond)", color: "var(--primary)", letterSpacing: "-0.01em" }}
-          >
-            Meet the Team
-          </h2>
-        </motion.div>
+        <SectionHeader label="Our Care Professionals" title="Meet the Team" />
       </div>
 
       {/* ── Carousel Layout ── */}
@@ -254,49 +192,30 @@ export default function TeamSection() {
                   className="text-3xl md:text-5xl font-bold mb-3 text-[var(--primary)]"
                   style={{ fontFamily: "var(--font-cormorant-garamond)" }}
                 >
-                  {activeTestimonial.name}
+                  {activeMember.name}
                 </h3>
                 <p 
                   className="text-sm md:text-base font-medium tracking-[0.1em] uppercase mb-8"
                   style={{ color: "var(--accent)" }}
                 >
-                  {activeTestimonial.role}
+                  {activeMember.role}
                 </p>
-                <motion.div 
+                <motion.p 
                   className="text-base md:text-lg leading-relaxed font-light mb-10"
                   style={{ color: "var(--text-secondary)", minHeight: "150px" }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
                 >
-                  {activeTestimonial.fullBio.split(" ").map((word, i) => (
-                    <motion.span
-                      key={i}
-                      initial={{
-                        filter: "blur(8px)",
-                        opacity: 0,
-                        y: 5,
-                      }}
-                      animate={{
-                        filter: "blur(0px)",
-                        opacity: 1,
-                        y: 0,
-                      }}
-                      transition={{
-                        duration: 0.3,
-                        ease: "easeOut",
-                        delay: 0.015 * i,
-                      }}
-                      style={{ display: "inline-block" }}
-                    >
-                      {word}&nbsp;
-                    </motion.span>
-                  ))}
-                </motion.div>
+                  {activeMember.fullBio}
+                </motion.p>
                 
-                {/* Specialities & Interaction */}
+                {/* Specialities */}
                 <div className="flex flex-wrap gap-2 mb-10">
-                  {activeTestimonial.specialties.map((s, idx) => (
-                      <span key={idx} className="px-4 py-2 border border-black/10 bg-black/5 rounded-full text-[10px] uppercase font-semibold tracking-widest text-[#1f1f1f]">
-                        {s}
-                      </span>
+                  {activeMember.specialties.map((s, idx) => (
+                    <span key={idx} className="px-4 py-2 border border-black/10 bg-black/5 rounded-full text-[10px] uppercase font-semibold tracking-widest text-[#1f1f1f]">
+                      {s}
+                    </span>
                   ))}
                 </div>
 
@@ -309,12 +228,12 @@ export default function TeamSection() {
                 className="inline-flex w-fit items-center justify-center gap-3 px-8 py-4 rounded-full text-[11px] font-bold tracking-[0.2em] uppercase transition-all duration-300 bg-[var(--primary)] text-white hover:bg-[var(--accent)] shadow-lg hover:shadow-xl group"
               >
                 Reserve Session
-                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                <Icon name="arrow-right" className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
               </a>
 
               <div className="flex gap-4">
                 <button
-                  className="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-colors duration-300 border-none bg-[#141414]"
+                  className="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-colors duration-300 border-none"
                   onClick={handlePrev}
                   style={{
                     backgroundColor: hoverPrev ? "var(--accent)" : "var(--primary)",
@@ -329,7 +248,7 @@ export default function TeamSection() {
                   </svg>
                 </button>
                 <button
-                  className="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-colors duration-300 border-none bg-[#141414]"
+                  className="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-colors duration-300 border-none"
                   onClick={handleNext}
                   style={{
                     backgroundColor: hoverNext ? "var(--accent)" : "var(--primary)",

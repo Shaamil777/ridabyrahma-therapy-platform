@@ -1,79 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-
-/* ─── Fade-in block ─── */
-function FadeIn({
-  children,
-  className = "",
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-40px" });
-
-  return (
-    <motion.div
-      ref={ref}
-      className={className}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-const services = [
-  {
-    title: "INDIVIDUAL THERAPY",
-    shortDescription: "Personalized one-on-one sessions for your mental wellness journey.",
-    description:
-      "One-on-one sessions tailored to your specific needs, focusing on personal growth, anxiety, depression, and trauma recovery.",
-    image: "/services/individual-therapy.png",
-  },
-  {
-    title: "COUPLES COUNSELING",
-    shortDescription: "Strengthen your relationship through guided communication.",
-    description:
-      "Work through relationship challenges, improve communication, and strengthen your bond in a supportive, neutral environment.",
-    image: "/services/couples-counseling.png",
-  },
-  {
-    title: "GROUP THERAPY",
-    shortDescription: "Heal together in a safe, supportive community setting.",
-    description:
-      "Connect with others facing similar struggles in a safe, guided setting. Share experiences and learn from collective wisdom.",
-    image: "/services/group-therapy.png",
-  },
-  {
-    title: "ONLINE CONSULTATIONS",
-    shortDescription: "Professional support from the comfort of your home.",
-    description:
-      "Access professional support from the comfort of your home with our secure and confidential teletherapy platform.",
-    image: "/services/online-consultation.png",
-  },
-  {
-    title: "CHILD & TEEN THERAPY",
-    shortDescription: "Specialized care for young minds navigating life's challenges.",
-    description:
-      "Specialized approaches to help adolescents navigate anxiety, bullying, academic pressure, and developmental transitions.",
-    image: "/services/child-therapy.png",
-  },
-  {
-    title: "STRESS MANAGEMENT",
-    shortDescription: "Evidence-based techniques to reclaim your inner calm.",
-    description:
-      "Learn evidence-based techniques to cope with workplace stress, prevent burnout, and balance your daily responsibilities.",
-    image: "/services/stress-management.png",
-  },
-];
+import FadeIn from "@/app/components/ui/FadeIn";
+import SectionHeader from "@/app/components/ui/SectionHeader";
+import Icon from "@/app/components/ui/Icons";
+import { services } from "@/app/data/services";
 
 export default function ServiceSection() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -106,36 +39,7 @@ export default function ServiceSection() {
 
       {/* ── Section Header ── */}
       <div className="section-container relative z-10 mb-16 md:mb-20">
-        <FadeIn className="text-center">
-          {/* Label with extending line */}
-          <div className="flex items-center justify-center gap-5 mb-6">
-            <div
-              className="w-12 h-px"
-              style={{ background: "var(--border-subtle)" }}
-            />
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase"
-              style={{ color: "var(--accent)" }}
-            >
-              What We Offer
-            </span>
-            <div
-              className="w-12 h-px"
-              style={{ background: "var(--border-subtle)" }}
-            />
-          </div>
-
-          <h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold"
-            style={{
-              fontFamily: "var(--font-cormorant-garamond)",
-              color: "var(--primary)",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            Our Services
-          </h2>
-        </FadeIn>
+        <SectionHeader label="What We Offer" title="Our Services" />
       </div>
 
       {/* ── Vertical Hover Accordion List ── */}
@@ -193,20 +97,16 @@ export default function ServiceSection() {
                 >
                   {/* Top row: Number + Title */}
                   <div className="flex items-baseline gap-4 md:gap-6 flex-wrap">
-                    {/* Number */}
                     <span
                       className="text-sm font-semibold tracking-widest shrink-0"
                       style={{
-                        color: isHovered
-                          ? "var(--accent)"
-                          : "rgba(31,31,31,0.18)",
+                        color: isHovered ? "var(--accent)" : "rgba(31,31,31,0.18)",
                         transition: "color 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
                       }}
                     >
                       {number}
                     </span>
 
-                    {/* Title */}
                     <h3
                       className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide"
                       style={{
@@ -258,19 +158,7 @@ export default function ServiceSection() {
                           style={{ color: "var(--accent)" }}
                         >
                           Learn more
-                          <svg
-                            className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M17 8l4 4m0 0l-4 4m4-4H3"
-                            />
-                          </svg>
+                          <Icon name="arrow-right" className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                         </span>
                       </motion.div>
                     )}
@@ -337,14 +225,7 @@ export default function ServiceSection() {
           }}
         >
           Book a Consultation
-          <svg
-            className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
+          <Icon name="arrow-right" className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
         </a>
       </div>
     </section>

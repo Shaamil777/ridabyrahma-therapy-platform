@@ -8,7 +8,7 @@ import ContactSection from "./components/sections/ContactSection";
 
 export default function Home() {
   return (
-    <>
+    <main>
       <HeroSection />
       <TrustSection />
       <AboutSection />
@@ -16,6 +16,6 @@ export default function Home() {
       <TeamSection />
       <FaqSection />
       <ContactSection />
-    </>
+    </main>
   )
 }

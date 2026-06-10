@@ -1,8 +1,9 @@
 import "./globals.css";
-import "./colors.css";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
+import FloatingToast from "./components/ui/FloatingToast";
 import { Quicksand, Playfair_Display, Inter, Cormorant_Garamond } from 'next/font/google';
+import type { Metadata } from "next";
 
 const quicksand = Quicksand({
   subsets: ['latin'],
@@ -28,7 +29,7 @@ const cormorantGaramond = Cormorant_Garamond({
   variable: '--font-cormorant-garamond',
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Rida By Rahma',
   description: 'Compassionate, expert online psychiatric care and mental health wellness.',
 };
@@ -44,8 +45,8 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <FloatingToast />
       </body>
     </html>
   );
 }
-

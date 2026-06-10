@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Icon from "@/app/components/ui/Icons";
+import { footerExploreLinks } from "@/app/data/navigation";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -30,13 +32,15 @@ export default function Footer() {
               Explore
             </h4>
             <nav className="grid grid-cols-2 gap-y-3 gap-x-4">
-              <Link href="#hero" className="text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">Home</Link>
-              <Link href="#about" className="text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">About Riḍā</Link>
-              <Link href="#how-it-works" className="text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">How it Works</Link>
-              <Link href="#service" className="text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">Services</Link>
-              <Link href="#team" className="text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">Therapist</Link>
-              <Link href="#faq" className="text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">FAQ</Link>
-              <Link href="#contact" className="text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">Contact</Link>
+              {footerExploreLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </nav>
           </div>
 
@@ -48,25 +52,25 @@ export default function Footer() {
             <ul className="flex flex-col gap-3.5">
               <li className="flex items-center gap-3">
                 <div className="w-6 h-6 rounded-full bg-[var(--surface)] border border-[var(--border-subtle)] flex items-center justify-center shrink-0">
-                  <svg className="w-3 h-3 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                  <Icon name="phone" className="w-3 h-3 text-[var(--accent)]" strokeWidth={1.5} />
                 </div>
                 <span className="text-xs font-medium text-[var(--text-secondary)]">Book via WhatsApp</span>
               </li>
               <li className="flex items-center gap-3">
                 <div className="w-6 h-6 rounded-full bg-[var(--surface)] border border-[var(--border-subtle)] flex items-center justify-center shrink-0">
-                  <svg className="w-3 h-3 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                  <Icon name="email" className="w-3 h-3 text-[var(--accent)]" />
                 </div>
                 <span className="text-xs font-medium text-[var(--text-secondary)]">Email Support</span>
               </li>
               <li className="flex items-center gap-3">
                 <div className="w-6 h-6 rounded-full bg-[var(--surface)] border border-[var(--border-subtle)] flex items-center justify-center shrink-0">
-                  <svg className="w-3 h-3 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  <Icon name="video" className="w-3 h-3 text-[var(--accent)]" />
                 </div>
                 <span className="text-xs font-medium text-[var(--text-secondary)]">Online Sessions Available</span>
               </li>
               <li className="flex items-center gap-3">
                 <div className="w-6 h-6 rounded-full bg-[var(--surface)] border border-[var(--border-subtle)] flex items-center justify-center shrink-0">
-                  <svg className="w-3 h-3 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                  <Icon name="lock" className="w-3 h-3 text-[var(--accent)]" />
                 </div>
                 <span className="text-xs font-medium text-[var(--text-secondary)]">Confidential & Secure</span>
               </li>
@@ -82,7 +86,7 @@ export default function Footer() {
         {/* Bottom copyright line */}
         <div className="pt-6 border-t border-[var(--border-subtle)] flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[11px] font-medium text-[var(--text-muted-color)]">
-            &copy; {currentYear === 2026 ? "2026" : "2026"} Riḍā by Rahma. All Rights Reserved.
+            &copy; {currentYear} Riḍā by Rahma. All Rights Reserved.
           </p>
           <div className="text-[11px] font-medium text-[var(--text-muted-color)]">
             Developed by <a href="#" className="text-[var(--accent)] hover:text-[var(--primary)] transition-colors underline-offset-4 hover:underline">Shaamil</a>

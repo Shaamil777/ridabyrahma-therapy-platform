@@ -2,13 +2,12 @@
 
 export default function HeroSection() {
   return (
-    <section id="hero" className="min-h-screen py-20 overflow-hidden relative flex items-center justify-center">
+    <section id="home" className="min-h-screen py-20 overflow-hidden relative flex items-center justify-center">
       <div className="section-container w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Side Content */}
-          {/* Left Side Content */}
           <div className="flex flex-col space-y-6">
-            {/* Left side content temporarily removed */}
+            {/* TODO: Left side hero content (temporarily removed) */}
           </div>
           
           {/* Right Side SVG */}
