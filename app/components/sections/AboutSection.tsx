@@ -67,7 +67,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative overflow-hidden"
+      className="relative overflow-clip"
       style={{
         background: "var(--background)",
       }}
