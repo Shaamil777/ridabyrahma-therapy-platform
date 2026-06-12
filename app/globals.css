@@ -194,3 +194,85 @@ body.loading-complete footer {
 .hero-mesh-3 {
   background: radial-gradient(circle, rgba(229,169,60,0.1) 0%, rgba(250,249,246,0) 60%);
 }
+
+/* ══════════════════════════════════════════
+   9. HERO ANIMATIONS
+   ══════════════════════════════════════════ */
+
+@keyframes heroBlurFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
+@keyframes heroTitleReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(1.05);
+    filter: blur(15px);
+    letter-spacing: 0.05em;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+    letter-spacing: normal; /* Wait, tracking-tight is in the class, so we shouldn't hardcode 'normal' if the class overrides it, but the class is on the element so animation might override it. Actually tracking-tight is -0.025em. Let's just animate letter-spacing directly to -0.025em or drop the letter-spacing animation to avoid conflict. */
+  }
+}
+
+/* Let's fix the letter-spacing in the title reveal so it matches tracking-tight */
+@keyframes heroTitleRevealFixed {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(1.05);
+    filter: blur(15px);
+    letter-spacing: 0.1em;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+    letter-spacing: -0.025em; /* tracking-tight */
+  }
+}
+
+@keyframes heroLineDraw {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.hero-animate-up { opacity: 0; will-change: transform, opacity, filter; }
+body.loading-complete .hero-animate-up {
+  animation: heroBlurFadeInUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-animate-scale { opacity: 0; will-change: transform, opacity, filter, letter-spacing; }
+body.loading-complete .hero-animate-scale {
+  animation: heroTitleRevealFixed 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-animate-expand { opacity: 0; transform-origin: center; will-change: transform, opacity; }
+body.loading-complete .hero-animate-expand {
+  animation: heroLineDraw 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Stagger Delays */
+body.loading-complete .hero-delay-1 { animation-delay: 0s; }
+body.loading-complete .hero-delay-2 { animation-delay: 0.2s; }
+body.loading-complete .hero-delay-3 { animation-delay: 0.4s; }
+body.loading-complete .hero-delay-4 { animation-delay: 0.6s; }
+body.loading-complete .hero-delay-5 { animation-delay: 0.8s; }
+body.loading-complete .hero-delay-6 { animation-delay: 1.0s; }
