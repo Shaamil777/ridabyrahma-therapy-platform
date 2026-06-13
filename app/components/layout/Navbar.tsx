@@ -41,25 +41,25 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Animated Background for Main Navbar */}
-      <div className={`fixed top-0 left-0 right-0 z-40 h-16 transition-all duration-500 ease-out ${
-        isScrolled 
-          ? 'bg-background/95 backdrop-blur-md border-b border-secondary-bg shadow-lg transform translate-y-0' 
-          : 'bg-transparent border-b border-transparent transform -translate-y-full'
-      }`}></div>
-
-      {/* Main Navbar Content (Always Visible) */}
-      <nav className="fixed top-0 left-0 right-0 z-50 font-quicksand">
-        <div className="flex items-center justify-between h-16" style={{ paddingLeft: 'var(--section-px)', paddingRight: 'var(--section-px)' }}>
+      {/* Main Navbar Content */}
+      <nav className={`fixed left-0 right-0 z-50 font-quicksand transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] flex justify-center ${
+        isScrolled ? 'top-4 sm:top-6 px-4 sm:px-6 pointer-events-none' : 'top-0 pointer-events-none'
+      }`}>
+        <div className={`w-full relative flex items-center justify-between transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] pointer-events-auto ${
+          isScrolled 
+            ? 'max-w-5xl bg-background/85 backdrop-blur-xl border border-secondary-bg shadow-lg rounded-full h-16 px-6 sm:px-8'
+            : 'max-w-[100vw] bg-transparent border-transparent h-24 px-[var(--section-px)] rounded-[0px]'
+        }`}
+        >
           
           {/* Logo */}
-          <div className="shrink-0">
+          <div className="shrink-0 z-10">
             <button
               onClick={() => scrollToSection('home')}
-              className={`font-bold text-2xl transition-all duration-300 ${
+              className={`font-bold transition-all duration-500 ease-in-out ${
                 isScrolled 
-                  ? 'text-accent hover:text-primary' 
-                  : 'text-primary hover:text-accent drop-shadow-lg'
+                  ? 'text-xl text-primary hover:text-accent' 
+                  : 'text-2xl text-primary hover:text-accent drop-shadow-md'
               }`}
               style={{ fontFamily: 'var(--font-cormorant-garamond)' }}
             >
@@ -68,30 +68,26 @@ export default function Navbar() {
           </div>
 
           {/* Right side - Navigation, Icons, and Book Now */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8 z-10">
             {/* Navigation Links */}
             <div className="flex items-center space-x-6">
               {navLinks.map((link) => (
                 <button
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
-                  className={`px-3 py-2 text-base font-semibold transition-all duration-500 ease-in-out font-quicksand relative ${
+                  className={`px-3 py-2 text-[15px] font-semibold transition-all duration-500 ease-in-out font-quicksand relative group ${
                     activeSection === link.id 
-                      ? isScrolled 
-                        ? 'text-accent' 
-                        : 'text-primary drop-shadow-2xl shadow-background'
+                      ? 'text-accent' 
                       : isScrolled
                         ? 'text-primary hover:text-accent'
-                        : 'text-primary/90 hover:text-accent drop-shadow-xl shadow-background'
+                        : 'text-primary/90 hover:text-accent drop-shadow-sm'
                   }`}
                 >
                   {link.label}
-                  <span className={`absolute bottom-0 left-0 right-0 h-0.5 transition-all duration-500 ease-in-out ${
+                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full transition-all duration-500 ease-in-out ${
                     activeSection === link.id
-                      ? isScrolled
-                        ? 'bg-accent scale-x-100'
-                        : 'bg-primary scale-x-100'
-                      : 'bg-transparent scale-x-0'
+                      ? 'bg-accent opacity-100 scale-100'
+                      : 'bg-accent opacity-0 scale-0 group-hover:opacity-50 group-hover:scale-100'
                   }`}></span>
                 </button>
               ))}
@@ -103,8 +99,8 @@ export default function Navbar() {
                 href="tel:+1234567890"
                 className={`p-2 transition-all duration-300 rounded-full ${
                   isScrolled
-                    ? 'text-calm-accent hover:text-accent hover:bg-calm-accent/10'
-                    : 'text-primary hover:text-background hover:bg-background/10 drop-shadow-md'
+                    ? 'text-primary hover:text-accent hover:bg-accent/10'
+                    : 'text-primary hover:text-accent hover:bg-background/20 drop-shadow-sm'
                 }`}
                 title="Call Us"
               >
@@ -115,10 +111,10 @@ export default function Navbar() {
             {/* Book Now Button */}
             <button 
               onClick={() => scrollToSection('contact')}
-              className={`px-6 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:shadow-lg font-quicksand ${
+              className={`px-6 py-2.5 rounded-full text-sm font-bold tracking-wide transition-all duration-500 ease-in-out font-quicksand shadow-sm hover:shadow-md active:scale-95 ${
                 isScrolled
-                  ? 'bg-calm-accent hover:bg-primary text-background'
-                  : 'bg-background/90 hover:bg-background text-primary hover:text-accent backdrop-blur-sm'
+                  ? 'bg-primary hover:bg-primary-hover text-surface'
+                  : 'bg-background hover:bg-surface text-primary backdrop-blur-md'
               }`}
             >
               BOOK NOW
@@ -126,71 +122,74 @@ export default function Navbar() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="lg:hidden">
+          <div className="lg:hidden z-10">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`p-2 rounded-md transition-all duration-300 ${
+              className={`p-2 rounded-full transition-all duration-300 ${
                 isScrolled
-                  ? 'text-primary hover:text-accent'
-                  : 'text-background hover:text-background/80 drop-shadow-lg'
+                  ? 'text-primary hover:bg-secondary-bg/50'
+                  : 'text-primary hover:bg-background/20 drop-shadow-sm'
               }`}
             >
-              <div className="w-6 h-6 relative">
-                <span className={`absolute block w-full h-0.5 bg-current transform transition-all duration-300 ${
-                  isMobileMenuOpen ? 'rotate-45 top-3' : 'top-1'
+              <div className="w-5 h-5 relative flex flex-col justify-center items-center">
+                <span className={`block w-5 h-[2px] bg-current transform transition-all duration-300 ease-in-out absolute ${
+                  isMobileMenuOpen ? 'rotate-45' : '-translate-y-1.5'
                 }`}></span>
-                <span className={`absolute block w-full h-0.5 bg-current transform transition-all duration-300 top-3 ${
-                  isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
+                <span className={`block w-5 h-[2px] bg-current transform transition-all duration-300 ease-in-out absolute ${
+                  isMobileMenuOpen ? 'opacity-0 scale-x-0' : 'opacity-100'
                 }`}></span>
-                <span className={`absolute block w-full h-0.5 bg-current transform transition-all duration-300 ${
-                  isMobileMenuOpen ? '-rotate-45 top-3' : 'top-5'
+                <span className={`block w-5 h-[2px] bg-current transform transition-all duration-300 ease-in-out absolute ${
+                  isMobileMenuOpen ? '-rotate-45' : 'translate-y-1.5'
                 }`}></span>
               </div>
             </button>
           </div>
-        </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden bg-background border-t border-secondary-bg">
-            <div className="px-4 pt-2 pb-3 space-y-1">
-              {navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => scrollToSection(link.id)}
-                  className={`block w-full text-left px-3 py-2 text-base font-medium transition-colors duration-200 font-quicksand ${
-                    activeSection === link.id 
-                      ? 'text-accent bg-accent-light' 
-                      : 'text-primary hover:text-accent hover:bg-accent-light'
-                  }`}
-                >
-                  {link.label}
-                </button>
-              ))}
-              
-              {/* Mobile Contact Icons */}
-              <div className="flex items-center justify-center space-x-6 pt-4 pb-2">
+          {/* Mobile Menu Dropdown */}
+          <div className={`absolute top-[calc(100%+1rem)] left-0 right-0 origin-top transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
+            isMobileMenuOpen 
+              ? 'opacity-100 pointer-events-auto translate-y-0 scale-y-100' 
+              : 'opacity-0 pointer-events-none -translate-y-4 scale-y-95'
+          }`}>
+            <div className="bg-background/95 backdrop-blur-2xl border border-secondary-bg shadow-xl rounded-2xl p-4 overflow-hidden">
+              <div className="flex flex-col space-y-1">
+                {navLinks.map((link) => (
+                  <button
+                    key={link.id}
+                    onClick={() => scrollToSection(link.id)}
+                    className={`text-left px-4 py-3 rounded-xl text-base font-semibold transition-all duration-300 font-quicksand flex items-center ${
+                      activeSection === link.id 
+                        ? 'text-accent bg-accent/10' 
+                        : 'text-primary hover:text-accent hover:bg-secondary-bg/50'
+                    }`}
+                  >
+                    {link.label}
+                    {activeSection === link.id && (
+                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-accent"></span>
+                    )}
+                  </button>
+                ))}
+                
+                <div className="h-px bg-secondary-bg my-3"></div>
+                
                 <a
                   href="tel:+1234567890"
-                  className="flex items-center space-x-2 text-calm-accent hover:text-accent transition-colors duration-200"
+                  className="flex items-center justify-center space-x-2 w-full py-3 text-primary hover:text-accent transition-colors duration-300 font-medium"
                 >
                   <Icon name="phone" className="w-5 h-5" />
-                  <span className="text-sm font-medium">Call</span>
+                  <span>Call Us</span>
                 </a>
-              </div>
-              
-              {/* Mobile Book Now Button */}
-              <div className="pt-2">
+                
                 <button 
                   onClick={() => scrollToSection('contact')}
-                  className="w-full bg-calm-accent hover:bg-primary text-background px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 font-quicksand"
+                  className="w-full bg-primary hover:bg-primary-hover text-surface px-4 py-3.5 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 font-quicksand shadow-sm active:scale-95 mt-2"
                 >
                   BOOK NOW
                 </button>
               </div>
             </div>
           </div>
-        )}
+        </div>
       </nav>
     </>
   );
