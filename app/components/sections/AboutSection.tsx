@@ -132,7 +132,7 @@ export default function AboutSection() {
         <div className="max-w-4xl px-6 pb-24 md:pb-32 text-center relative z-10 -mt-2 md:-mt-6 mx-auto">
           <FadeIn delay={0.2} margin="-100px">
             <h3 className="text-3xl md:text-4xl font-bold mb-8" style={{ color: "var(--primary)", fontFamily: "var(--font-cormorant-garamond)" }}>
-              Why the name Riḍā?
+              Not by Chance
             </h3>
             <div className="space-y-6 text-[17px] md:text-[20px] leading-relaxed" style={{ color: "var(--text-secondary)" }}>
               <p>
