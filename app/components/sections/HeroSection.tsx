@@ -24,6 +24,31 @@ export default function HeroSection() {
         </div>
       </div>
 
+      {/* Psychology Quotes - Left and Right */}
+      <div className="hidden lg:flex flex-col absolute left-[4%] xl:left-[8%] top-[35%] max-w-[220px] xl:max-w-[280px] z-20 hero-animate-up hero-delay-4 mix-blend-multiply">
+        <p className="font-cormorant text-[#5A6B56] text-xl xl:text-2xl italic leading-relaxed mb-4 opacity-90">
+          "The curious paradox is that when I accept myself just as I am, then I can change."
+        </p>
+        <div className="flex items-center gap-3">
+          <div className="h-[1px] w-8 bg-[#8C5A3E] opacity-40"></div>
+          <p className="text-[#8C5A3E] text-[10px] xl:text-xs uppercase tracking-[0.2em] font-semibold opacity-90">
+            Carl Rogers
+          </p>
+        </div>
+      </div>
+
+      <div className="hidden lg:flex flex-col absolute right-[4%] xl:right-[8%] top-[45%] max-w-[220px] xl:max-w-[280px] text-right items-end z-20 hero-animate-up hero-delay-5 mix-blend-multiply">
+        <p className="font-cormorant text-[#5A6B56] text-xl xl:text-2xl italic leading-relaxed mb-4 opacity-90">
+          "Who looks outside, dreams; who looks inside, awakes."
+        </p>
+        <div className="flex items-center justify-end gap-3">
+          <p className="text-[#8C5A3E] text-[10px] xl:text-xs uppercase tracking-[0.2em] font-semibold opacity-90">
+            Carl Jung
+          </p>
+          <div className="h-[1px] w-8 bg-[#8C5A3E] opacity-40"></div>
+        </div>
+      </div>
+
       {/* Main Hero Content */}
       <div className="relative z-20 flex flex-col items-center justify-center text-center mt-[-55vh] max-w-5xl mx-auto px-4">
         {/* Top Tagline with Icon */}
