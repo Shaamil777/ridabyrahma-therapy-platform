@@ -8,7 +8,7 @@ import Icon from "@/app/components/ui/Icons";
 // Scroll-linked reveal animation for the RIDA text
 function ScrollRevealRida() {
   const ref = useRef<HTMLDivElement>(null);
-  
+
   // Track the scroll progress of this specific container
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -124,10 +124,10 @@ export default function AboutSection() {
 
       {/* 2. HUGE Rida Reveal & Explanation */}
       <div className="w-full flex flex-col items-center justify-center border-b border-[var(--border-subtle)]" style={{ background: "rgba(106,142,143,0.02)" }}>
-        
+
         {/* Animated RIDA text linked to scroll */}
         <ScrollRevealRida />
-        
+
         {/* Explanation Paragraph Below */}
         <div className="max-w-4xl px-6 pb-24 md:pb-32 text-center relative z-10 -mt-2 md:-mt-6 mx-auto">
           <FadeIn delay={0.2} margin="-100px">
@@ -163,7 +163,7 @@ export default function AboutSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-10 relative">
           {/* Connecting line for desktop */}
           <div className="hidden lg:block absolute top-12 left-[12.5%] right-[12.5%] h-[1px] z-0" style={{ background: "linear-gradient(90deg, transparent, var(--border-subtle) 20%, var(--border-subtle) 80%, transparent)" }} />
-          
+
           {therapySteps.map((item, i) => (
             <FadeIn key={i} delay={0.1 * i} className="relative z-10 flex flex-col items-center text-center group" margin="-100px">
               <div className="w-24 h-24 rounded-full border border-[var(--border-subtle)] flex items-center justify-center mb-8 shadow-sm group-hover:-translate-y-2 group-hover:shadow-lg transition-all duration-500 relative" style={{ background: "rgba(106,142,143,0.02)", color: "var(--accent)" }}>
