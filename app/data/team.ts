@@ -25,7 +25,7 @@ export const teamMembers: TeamMember[] = [
     id: 3,
     name: "Emily Williams, LCSW",
     role: "Clinical Social Worker",
-    image: "https://images.unsplash.com/photo-1594824432258-f24fa9343ee4?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=800&q=80",
     shortBio: "Focuses on trauma-informed care and relationship counseling.",
     fullBio: "Emily Williams specializes in trauma-informed care and couples relationship counseling. With a warm and empathetic approach, Emily creates a safe space for clients to explore past traumas, work through relationship conflicts, and rebuild trust and connection.",
     specialties: ["Couples Therapy", "Trauma & PTSD", "Family Dynamics"],
