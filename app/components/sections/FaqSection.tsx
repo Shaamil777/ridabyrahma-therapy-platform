@@ -24,7 +24,6 @@ export default function FaqSection() {
         paddingBottom: "var(--section-py)",
       }}
     >
-      {/* Subtle radial gradient background accent */}
       <div
         className="absolute top-1/2 right-0 w-[500px] h-[500px] rounded-full opacity-[0.03] pointer-events-none z-0"
         style={{
@@ -35,7 +34,6 @@ export default function FaqSection() {
 
       <div className="section-container relative z-10">
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
-          {/* ── Left Column: Header ── */}
           <div className="lg:w-1/3 flex flex-col justify-start">
             <FadeIn>
               <SectionHeader
@@ -59,7 +57,6 @@ export default function FaqSection() {
             </FadeIn>
           </div>
 
-          {/* ── Right Column: FAQ Accordion ── */}
           <div className="lg:w-2/3 flex flex-col gap-4">
             {faqs.map((faq, index) => {
               const isOpen = openIndex === index;
@@ -76,7 +73,6 @@ export default function FaqSection() {
                     }}
                     onClick={() => toggleOpen(index)}
                   >
-                    {/* Hover state background */}
                     <div
                       className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                       style={{
@@ -128,7 +124,6 @@ export default function FaqSection() {
                       </AnimatePresence>
                     </div>
                   </div>
-                  {/* Subtle divider if not open and not hovered */}
                   {!isOpen && (
                     <div
                       className="h-px mx-6 transition-opacity duration-300 group-hover:opacity-0"

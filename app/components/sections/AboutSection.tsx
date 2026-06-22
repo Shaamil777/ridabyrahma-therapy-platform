@@ -5,17 +5,14 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import FadeIn from "@/app/components/ui/FadeIn";
 import Icon from "@/app/components/ui/Icons";
 
-// Scroll-linked reveal animation for the RIDA text
 function ScrollRevealRida() {
   const ref = useRef<HTMLDivElement>(null);
 
-  // Track the scroll progress of this specific container
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start 90%", "end 60%"],
   });
 
-  // Transform values based on scroll progress for a wiping reveal effect
   const clipPath = useTransform(scrollYProgress, [0, 1], ["inset(100% 0 0 0)", "inset(0% 0 0 0)"]);
   const y = useTransform(scrollYProgress, [0, 1], [150, 0]);
   const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
@@ -38,7 +35,6 @@ function ScrollRevealRida() {
   );
 }
 
-/** Step data for the "How Therapy Works" section */
 const therapySteps = [
   {
     step: "01",
@@ -75,7 +71,6 @@ export default function AboutSection() {
         background: "var(--background)",
       }}
     >
-      {/* 1. Introduction Paragraph */}
       <div className="section-container pt-32 pb-20 md:py-40 relative z-10 border-b border-[var(--border-subtle)]">
         <FadeIn className="max-w-4xl mx-auto text-center" margin="-100px">
           <div className="flex items-center justify-center gap-4 mb-8">
@@ -122,13 +117,10 @@ export default function AboutSection() {
         </FadeIn>
       </div>
 
-      {/* 2. HUGE Rida Reveal & Explanation */}
       <div className="w-full flex flex-col items-center justify-center border-b border-[var(--border-subtle)]" style={{ background: "rgba(106,142,143,0.02)" }}>
 
-        {/* Animated RIDA text linked to scroll */}
         <ScrollRevealRida />
 
-        {/* Explanation Paragraph Below */}
         <div className="max-w-4xl px-6 pb-24 md:pb-32 text-center relative z-10 -mt-2 md:-mt-6 mx-auto">
           <FadeIn delay={0.2} margin="-100px">
             <h3 className="text-3xl md:text-4xl font-bold mb-8" style={{ color: "var(--primary)", fontFamily: "var(--font-cormorant-garamond)" }}>
@@ -149,7 +141,6 @@ export default function AboutSection() {
         </div>
       </div>
 
-      {/* 3. How Therapy Works */}
       <div className="section-container py-24 md:py-32">
         <FadeIn className="text-center mb-16 md:mb-24" margin="-100px">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" style={{ color: "var(--primary)", fontFamily: "var(--font-cormorant-garamond)" }}>
@@ -161,7 +152,6 @@ export default function AboutSection() {
         </FadeIn>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-10 relative">
-          {/* Connecting line for desktop */}
           <div className="hidden lg:block absolute top-12 left-[12.5%] right-[12.5%] h-[1px] z-0" style={{ background: "linear-gradient(90deg, transparent, var(--border-subtle) 20%, var(--border-subtle) 80%, transparent)" }} />
 
           {therapySteps.map((item, i) => (

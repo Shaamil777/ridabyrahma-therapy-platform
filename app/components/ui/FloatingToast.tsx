@@ -3,15 +3,11 @@
 import { useState } from "react";
 import Icon from "./Icons";
 
-/**
- * Modern floating action button (FAB) for WhatsApp CTA.
- */
 export default function FloatingToast() {
   const [isTooltipVisible, setIsTooltipVisible] = useState(true);
 
   return (
     <div className="fixed z-50 bottom-6 md:bottom-10 right-4 md:right-10 pointer-events-none flex flex-col items-end gap-3">
-      {/* Tooltip bubble */}
       {isTooltipVisible && (
         <div className="bg-white border border-[var(--border-subtle)] p-4 rounded-2xl shadow-[var(--card-shadow)] relative pointer-events-auto origin-bottom-right transition-all duration-500 max-w-[260px] animate-in fade-in slide-in-from-bottom-4">
           <button
@@ -33,7 +29,6 @@ export default function FloatingToast() {
         </div>
       )}
 
-      {/* FAB */}
       <a
         href="https://wa.me/1234567890?text=Hi%2C%20I%27d%20like%20to%20book%20a%20therapy%20session.%20Can%20you%20help%20me%20get%20started%3F"
         target="_blank"

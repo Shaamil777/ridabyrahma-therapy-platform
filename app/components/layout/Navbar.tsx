@@ -9,7 +9,6 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
-  // Single combined scroll handler for both scroll state and active section tracking
   const handleScroll = useCallback(() => {
     setIsScrolled(window.scrollY > 20);
 
@@ -41,7 +40,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Main Navbar Content */}
       <nav className={`fixed left-0 right-0 z-50 font-quicksand transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] flex justify-center ${
         isScrolled ? 'top-4 sm:top-6 px-4 sm:px-6 pointer-events-none' : 'top-0 pointer-events-none'
       }`}>
@@ -52,7 +50,6 @@ export default function Navbar() {
         }`}
         >
           
-          {/* Logo */}
           <div className="shrink-0 z-10">
             <button
               onClick={() => scrollToSection('home')}
@@ -67,9 +64,7 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Right side - Navigation, Icons, and Book Now */}
           <div className="hidden lg:flex items-center space-x-8 z-10">
-            {/* Navigation Links */}
             <div className="flex items-center space-x-6">
               {navLinks.map((link) => (
                 <button
@@ -93,7 +88,6 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Contact Icons */}
             <div className="flex items-center space-x-3">
               <a
                 href="tel:+1234567890"
@@ -108,7 +102,6 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Book Now Button */}
             <button 
               onClick={() => scrollToSection('contact')}
               className={`px-6 py-2.5 rounded-full text-sm font-bold tracking-wide transition-all duration-500 ease-in-out font-quicksand shadow-sm hover:shadow-md active:scale-95 ${
@@ -121,7 +114,6 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile menu button */}
           <div className="lg:hidden z-10">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -145,7 +137,6 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile Menu Dropdown */}
           <div className={`absolute top-[calc(100%+1rem)] left-0 right-0 origin-top transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
             isMobileMenuOpen 
               ? 'opacity-100 pointer-events-auto translate-y-0 scale-y-100' 

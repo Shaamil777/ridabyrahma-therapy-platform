@@ -26,7 +26,6 @@ function calculateGap(width: number) {
 export default function TeamSection() {
   const autoplay = true;
 
-  // State
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoverPrev, setHoverPrev] = useState(false);
   const [hoverNext, setHoverNext] = useState(false);
@@ -41,7 +40,6 @@ export default function TeamSection() {
     [activeIndex]
   );
 
-  // Responsive gap calculation
   useEffect(() => {
     function handleResize() {
       if (imageContainerRef.current) {
@@ -53,7 +51,6 @@ export default function TeamSection() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Autoplay
   useEffect(() => {
     if (autoplay) {
       autoplayIntervalRef.current = setInterval(() => {
@@ -65,7 +62,6 @@ export default function TeamSection() {
     };
   }, [autoplay, totalMembers]);
 
-  // Navigation handlers
   const handleNext = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % totalMembers);
     if (autoplayIntervalRef.current) clearInterval(autoplayIntervalRef.current);
@@ -76,7 +72,6 @@ export default function TeamSection() {
     if (autoplayIntervalRef.current) clearInterval(autoplayIntervalRef.current);
   }, [totalMembers]);
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") handlePrev();
@@ -86,7 +81,6 @@ export default function TeamSection() {
     return () => window.removeEventListener("keydown", handleKey);
   }, [handlePrev, handleNext]);
 
-  // Compute transforms for each image
   function getImageStyle(index: number): React.CSSProperties {
     const gap = calculateGap(containerWidth);
     const maxStickUp = gap * 0.8;
@@ -130,7 +124,6 @@ export default function TeamSection() {
         boxShadow: baseShadow,
       };
     }
-    // Hide all other images
     return {
       zIndex: 1,
       opacity: 0,
@@ -140,7 +133,6 @@ export default function TeamSection() {
     };
   }
 
-  // Framer Motion variants
   const contentVariants = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -149,16 +141,13 @@ export default function TeamSection() {
 
   return (
     <section id="team" className="w-full relative overflow-hidden" style={{ background: "var(--background)", paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
-      {/* ── Section Header ── */}
       <div className="section-container mb-16 md:mb-24">
         <SectionHeader label="Our Care Professionals" title="Meet the Team" />
       </div>
 
-      {/* ── Carousel Layout ── */}
       <div className="section-container pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           
-          {/* Images */}
           <div 
             className="relative w-full max-w-[450px] mx-auto lg:mx-0 h-[400px] md:h-[550px]" 
             style={{ perspective: "1000px" }}
@@ -176,7 +165,6 @@ export default function TeamSection() {
             ))}
           </div>
 
-          {/* Content */}
           <div className="flex flex-col justify-start w-full lg:max-w-md">
             <AnimatePresence mode="wait">
               <motion.div
@@ -210,7 +198,6 @@ export default function TeamSection() {
                   {activeMember.fullBio}
                 </motion.p>
                 
-                {/* Specialities */}
                 <div className="flex flex-wrap gap-2 mb-10">
                   {activeMember.specialties.map((s, idx) => (
                     <span key={idx} className="px-4 py-2 border border-black/10 bg-black/5 rounded-full text-[10px] uppercase font-semibold tracking-widest text-[#1f1f1f]">

@@ -8,17 +8,13 @@ export default function GlobalLoadingSequence() {
   const [loadingState, setLoadingState] = useState<LoadingState>('hidden');
 
   useEffect(() => {
-    // Add loading class to disable scroll and hide navigation initially
     document.documentElement.classList.add("is-loading");
     document.body.classList.add("is-loading");
     document.documentElement.classList.remove("loading-complete");
     document.body.classList.remove("loading-complete");
 
-    // State 1: Leaf fades in and begins pulsing
     const t1 = setTimeout(() => setLoadingState('fade-in'), 100);
-    // State 2: Leaf scales up to hero section size, overlay fades out
     const t2 = setTimeout(() => setLoadingState('transition'), 2000);
-    // State 3: Transition complete, leaf anchors to the document flow
     const t3 = setTimeout(() => {
       setLoadingState('complete');
       document.documentElement.classList.remove("is-loading");
@@ -36,7 +32,6 @@ export default function GlobalLoadingSequence() {
 
   return (
     <>
-      {/* Loading Screen Overlay */}
       {loadingState !== 'complete' && (
         <div 
           className={`fixed inset-0 z-50 bg-background flex items-center justify-center transition-opacity duration-1000 ease-in-out ${
@@ -45,7 +40,6 @@ export default function GlobalLoadingSequence() {
         />
       )}
 
-      {/* The Global Shared Leaf */}
       <div 
         className={`flex items-center justify-center overflow-hidden pointer-events-none transition-all ease-[cubic-bezier(0.25,1,0.5,1)] ${
           loadingState === 'complete' ? 'absolute top-0 left-0 w-full h-[100vh] z-[30]' : 'fixed inset-0 z-[60]'
@@ -55,7 +49,7 @@ export default function GlobalLoadingSequence() {
           opacity: loadingState === 'hidden' ? 0 : loadingState === 'fade-in' ? 1 : 0.85,
           transform: loadingState === 'hidden' || loadingState === 'fade-in' 
             ? 'scale(0.2) rotate(-15deg)'
-            : 'scale(1) rotate(8deg)', // transition and complete states
+            : 'scale(1) rotate(8deg)',
         }}
       >
         <img

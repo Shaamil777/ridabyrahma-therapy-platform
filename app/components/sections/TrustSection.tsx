@@ -19,7 +19,6 @@ export default function TrustSection() {
   const cardsRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    // Background parallax effect
     if (bgImageRef.current) {
       gsap.fromTo(bgImageRef.current,
         { scale: 1.2, y: "-10%" },
@@ -37,7 +36,6 @@ export default function TrustSection() {
       );
     }
 
-    // Header reveal animation
     if (headerRef.current) {
       gsap.fromTo(headerRef.current.children,
         { y: 50, opacity: 0 },
@@ -55,7 +53,6 @@ export default function TrustSection() {
       );
     }
 
-    // Cards staggered animation
     if (cardsRef.current) {
       gsap.fromTo(cardsRef.current.children,
         { y: 80, opacity: 0, scale: 0.95 },
@@ -83,7 +80,6 @@ export default function TrustSection() {
       style={{ background: "var(--background)" }}
     >
       <div className="relative rounded-[2.5rem] md:rounded-[3rem] overflow-hidden w-full mx-auto shadow-xl">
-        {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image 
             ref={bgImageRef}
@@ -98,7 +94,6 @@ export default function TrustSection() {
 
         <div className="relative z-10 py-16 md:py-24 px-6 md:px-12 lg:px-20">
           
-          {/* Header section before the grid */}
           <div ref={headerRef} className="relative mb-16 md:mb-20 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-4 mb-6 opacity-0">
               <span className="text-xs font-semibold tracking-[0.2em] uppercase shrink-0 text-white/90">
@@ -116,7 +111,6 @@ export default function TrustSection() {
             </h2>
           </div>
 
-          {/* Cards Grid */}
           <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {trustItems.map((item, index) => (
               <div 
@@ -143,7 +137,6 @@ export default function TrustSection() {
                   </p>
                 </div>
 
-                {/* Elegant decorative glow on hover */}
                 <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0 pointer-events-none"></div>
               </div>
             ))}
