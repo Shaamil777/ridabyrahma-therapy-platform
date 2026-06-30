@@ -106,18 +106,7 @@ export default function ContactSection() {
                </a>
             </div>
 
-            {/* Emergency Note */}
-            <div className="mt-8 lg:mt-10 bg-[#FFF4F4] border border-[#FFD6D6] p-5 md:p-6 flex items-start gap-4 shadow-sm" style={{ borderRadius: 'var(--card-radius)' }}>
-              <div className="shrink-0 text-[#D32F2F]">
-                <Icon name="warning" className="w-6 h-6 mt-0.5" />
-              </div>
-              <div>
-                <p className="text-[#D32F2F] font-bold mb-1.5 text-xs uppercase tracking-wider">Emergency Support</p>
-                <p className="text-[#D32F2F] text-[13px] leading-relaxed opacity-90">
-                  If you are in immediate danger or experiencing a life-threatening mental health emergency, please do not use this site. Call <strong>911</strong> or your local emergency number immediately.
-                </p>
-              </div>
-            </div>
+
 
           </motion.div>
 
