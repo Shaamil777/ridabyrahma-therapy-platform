@@ -123,18 +123,15 @@ export default function AboutSection() {
 
         <div className="max-w-4xl px-6 pb-24 md:pb-32 text-center relative z-10 -mt-2 md:-mt-6 mx-auto">
           <FadeIn delay={0.2} margin="-100px">
-            <h3 className="text-3xl md:text-4xl font-bold mb-8" style={{ color: "var(--primary)", fontFamily: "var(--font-cormorant-garamond)" }}>
-              Not by Chance
-            </h3>
             <div className="space-y-6 text-[17px] md:text-[20px] leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+              <p className="italic text-[18px] md:text-[22px] mb-8" style={{ color: "var(--primary)", fontFamily: "var(--font-cormorant-garamond)" }}>
+                Our name serves as a reminder of the destination we hope to help our clients reach: a place of greater balance, healing, and peace within themselves.
+              </p>
               <p>
                 Riḍā is an Arabic word that embodies contentment, acceptance, and inner peace. It reflects the belief that true well-being comes not from the absence of struggle, but from developing the strength, understanding, and support needed to navigate it.
               </p>
               <p>
                 At Riḍā by Rahma, we are committed to creating a safe and compassionate space where individuals can explore their thoughts, overcome challenges, and build a healthier relationship with themselves. Every session is guided by empathy, evidence-based practice, and a deep respect for each person's unique journey.
-              </p>
-              <p className="italic text-[18px] md:text-[22px] mt-8" style={{ color: "var(--primary)", fontFamily: "var(--font-cormorant-garamond)" }}>
-                Our name serves as a reminder of the destination we hope to help our clients reach: a place of greater balance, healing, and peace within themselves.
               </p>
             </div>
           </FadeIn>
