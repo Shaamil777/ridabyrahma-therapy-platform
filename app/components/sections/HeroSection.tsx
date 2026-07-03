@@ -53,7 +53,7 @@ export default function HeroSection() {
         </div>
 
         <h1 className="hero-animate-scale hero-delay-2 text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[11rem] font-cormorant font-semibold text-[#3A4B35] leading-[1.1] tracking-tight -mt-1 sm:-mt-2 md:-mt-3 lg:-mt-4">
-          Breathe.
+          Breathe
         </h1>
       </div>
 
