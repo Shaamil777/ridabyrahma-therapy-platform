@@ -92,19 +92,6 @@ export default function HeroSection() {
         </button>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none">
-        <svg
-          viewBox="0 0 1440 150"
-          preserveAspectRatio="none"
-          className="relative block w-full h-[80px] md:h-[130px] lg:h-[160px] translate-y-px"
-        >
-          <path
-            d="M 0,0 Q 720,250 1440,0 L 1440,150 L 0,150 Z"
-            fill="var(--accent-light-color)"
-            opacity="0.95"
-          />
-        </svg>
-      </div>
     </section>
   );
 }

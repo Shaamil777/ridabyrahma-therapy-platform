@@ -71,7 +71,7 @@ export default function AboutSection() {
         background: "var(--background)",
       }}
     >
-      <div className="section-container pt-32 pb-20 md:py-40 relative z-10 border-b border-[var(--border-subtle)]">
+      <div className="section-container pt-32 pb-20 md:py-40 relative z-10">
         <FadeIn className="max-w-4xl mx-auto text-center" margin="-100px">
           <div className="flex items-center justify-center gap-4 mb-8">
             <div
@@ -117,7 +117,7 @@ export default function AboutSection() {
         </FadeIn>
       </div>
 
-      <div className="w-full flex flex-col items-center justify-center border-b border-[var(--border-subtle)]" style={{ background: "rgba(106,142,143,0.02)" }}>
+      <div className="w-full flex flex-col items-center justify-center" style={{ background: "var(--background)" }}>
 
         <ScrollRevealRida />
 
