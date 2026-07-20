@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import FadeIn from "@/app/components/ui/FadeIn";
-import Icon from "@/app/components/ui/Icons";
 
 function ScrollRevealRida() {
   const ref = useRef<HTMLDivElement>(null);
@@ -34,33 +33,6 @@ function ScrollRevealRida() {
     </div>
   );
 }
-
-const therapySteps = [
-  {
-    step: "01",
-    title: "Book a Session",
-    description: "Choose a convenient time and select the specialist that best matches your needs.",
-    iconName: "calendar" as const,
-  },
-  {
-    step: "02",
-    title: "Initial Consultation",
-    description: "Discuss your concerns, personal goals, and needs in a supportive, non-judgmental space.",
-    iconName: "chat" as const,
-  },
-  {
-    step: "03",
-    title: "Personalized Support",
-    description: "A customized therapy plan is carefully developed based on your unique situation.",
-    iconName: "map" as const,
-  },
-  {
-    step: "04",
-    title: "Ongoing Sessions",
-    description: "Work collaboratively toward personal growth, lasting healing, and emotional well-being.",
-    iconName: "heart" as const,
-  },
-];
 
 export default function AboutSection() {
   return (
@@ -138,34 +110,6 @@ export default function AboutSection() {
         </div>
       </div>
 
-      <div className="section-container py-24 md:py-32">
-        <FadeIn className="text-center mb-16 md:mb-24" margin="-100px">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" style={{ color: "var(--primary)", fontFamily: "var(--font-cormorant-garamond)" }}>
-            How Therapy Works
-          </h2>
-          <p className="text-lg md:text-xl max-w-2xl mx-auto" style={{ color: "var(--text-secondary)" }}>
-            A collaborative journey designed to help you discover clarity, build resilience, and achieve lasting well-being.
-          </p>
-        </FadeIn>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-10 relative">
-          <div className="hidden lg:block absolute top-12 left-[12.5%] right-[12.5%] h-[1px] z-0" style={{ background: "linear-gradient(90deg, transparent, var(--border-subtle) 20%, var(--border-subtle) 80%, transparent)" }} />
-
-          {therapySteps.map((item, i) => (
-            <FadeIn key={i} delay={0.1 * i} className="relative z-10 flex flex-col items-center text-center group" margin="-100px">
-              <div className="w-24 h-24 rounded-full border border-[var(--border-subtle)] flex items-center justify-center mb-8 shadow-sm group-hover:-translate-y-2 group-hover:shadow-lg transition-all duration-500 relative" style={{ background: "rgba(106,142,143,0.02)", color: "var(--accent)" }}>
-                <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-500" style={{ background: "var(--accent)" }} />
-                <Icon name={item.iconName} />
-                <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shadow-md" style={{ background: "var(--primary)", color: "white" }}>
-                  {item.step}
-                </div>
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold mb-4" style={{ color: "var(--primary)", fontFamily: "var(--font-cormorant-garamond)" }}>{item.title}</h3>
-              <p className="text-[15px] md:text-[16px] leading-relaxed" style={{ color: "var(--text-secondary)" }}>{item.description}</p>
-            </FadeIn>
-          ))}
-        </div>
-      </div>
     </section>
   );
-}
+}

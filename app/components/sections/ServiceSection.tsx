@@ -37,14 +37,19 @@ export default function ServiceSection() {
         }}
       />
 
-      {/* ── Service Background Images (crossfade on hover) ── */}
+      {/* ── Service Background Images (crossfade and scale on hover) ── */}
       {services.map((service, index) => (
-        <div
+        <motion.div
           key={`bg-${index}`}
           className="absolute inset-0 z-[1]"
-          style={{
+          initial={{ opacity: 0, scale: 1.08 }}
+          animate={{
             opacity: hoveredIndex === index ? 1 : 0,
-            transition: "opacity 1s cubic-bezier(0.16, 1, 0.3, 1)",
+            scale: hoveredIndex === index ? 1 : 1.08,
+          }}
+          transition={{ 
+            opacity: { duration: 1, ease: [0.16, 1, 0.3, 1] },
+            scale: { duration: 1.5, ease: [0.25, 1, 0.5, 1] } 
           }}
         >
           <Image
@@ -55,7 +60,7 @@ export default function ServiceSection() {
             sizes="100vw"
             priority={index === 0}
           />
-        </div>
+        </motion.div>
       ))}
 
       {/* ── Dark Overlay (only visible on hover) ── */}

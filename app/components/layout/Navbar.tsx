@@ -46,7 +46,7 @@ export default function Navbar() {
         <div className={`w-full relative flex items-center justify-between transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] pointer-events-auto ${
           isScrolled 
             ? 'max-w-5xl bg-background/85 backdrop-blur-xl border border-secondary-bg shadow-lg rounded-full h-16 px-6 sm:px-8'
-            : 'max-w-[100vw] bg-transparent border-transparent h-24 px-[var(--section-px)] rounded-[0px]'
+            : 'max-w-full bg-transparent border-transparent h-24 px-[var(--section-px)] rounded-[0px]'
         }`}
         >
           

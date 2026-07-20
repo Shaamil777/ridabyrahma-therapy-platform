@@ -1,6 +1,17 @@
 "use client";
+import { useState, useEffect } from "react";
 
 export default function HeroSection() {
+  const [isVideoReady, setIsVideoReady] = useState(false);
+
+  useEffect(() => {
+    // Wait for the global loading sequence to finish (3200ms)
+    const timer = setTimeout(() => {
+      setIsVideoReady(true);
+    }, 3200);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section id="home" className="min-h-screen py-20 md:py-28 overflow-hidden relative flex items-center justify-center bg-background">
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
@@ -90,6 +101,23 @@ export default function HeroSection() {
             </svg>
           </span>
         </button>
+      </div>
+
+      {/* Foreground Video */}
+      <div className="absolute inset-0 pointer-events-none hero-animate-up hero-delay-2">
+        {isVideoReady && (
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src="/video/FG.webm" type="video/webm" />
+            <source src="/video/FG.mov" type="video/mp4" />
+            <source src="/video/FG.mov" type="video/quicktime" />
+          </video>
+        )}
       </div>
 
     </section>
