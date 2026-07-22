@@ -183,26 +183,40 @@ export default function TeamSection() {
                   {activeMember.name}
                 </h3>
                 <p 
-                  className="text-sm md:text-base font-medium tracking-[0.1em] uppercase mb-8"
+                  className="text-sm md:text-base font-medium tracking-[0.1em] uppercase mb-5"
                   style={{ color: "var(--accent)" }}
                 >
                   {activeMember.role}
                 </p>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {activeMember.specialties.map((s, idx) => (
+                    <span key={idx} className="px-4 py-2 border border-black/10 bg-black/5 rounded-full text-[10px] uppercase font-semibold tracking-widest text-[#1f1f1f]">
+                      {s}
+                    </span>
+                  ))}
+                </div>
+
                 <motion.p 
-                  className="text-base md:text-lg leading-relaxed font-light mb-10"
-                  style={{ color: "var(--text-secondary)", minHeight: "150px" }}
+                  className="text-base md:text-lg leading-relaxed font-light mb-8"
+                  style={{ color: "var(--text-secondary)" }}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
                 >
                   {activeMember.fullBio}
                 </motion.p>
-                
-                <div className="flex flex-wrap gap-2 mb-10">
-                  {activeMember.specialties.map((s, idx) => (
-                    <span key={idx} className="px-4 py-2 border border-black/10 bg-black/5 rounded-full text-[10px] uppercase font-semibold tracking-widest text-[#1f1f1f]">
-                      {s}
-                    </span>
+
+                <div className="flex gap-6 md:gap-8">
+                  {activeMember.achievements.map((a, idx) => (
+                    <div key={idx} className="flex flex-col items-center text-center">
+                      <span className="text-2xl md:text-3xl font-bold text-[var(--primary)]" style={{ fontFamily: "var(--font-cormorant-garamond)" }}>
+                        {a.value}
+                      </span>
+                      <span className="text-[10px] md:text-xs uppercase tracking-widest mt-1" style={{ color: "var(--text-secondary)" }}>
+                        {a.label}
+                      </span>
+                    </div>
                   ))}
                 </div>
 

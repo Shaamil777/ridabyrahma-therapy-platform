@@ -10,6 +10,11 @@ export const teamMembers: TeamMember[] = [
     fullBio: "Dr. Sarah Chen brings over 15 years of clinical experience helping individuals navigate anxiety, depression, and major life transitions. She utilizes Evidence-Based treatments including CBT and mindfulness-based cognitive therapy to empower her clients toward sustainable mental well-being.",
     specialties: ["Anxiety & Panic", "Depression", "Stress Management"],
     education: "Ph.D. in Clinical Psychology, Stanford University",
+    achievements: [
+      { label: "Sessions", value: "4,200+" },
+      { label: "Years Exp.", value: "15" },
+      { label: "Satisfaction", value: "98%" },
+    ],
   },
   {
     id: 2,
@@ -20,6 +25,11 @@ export const teamMembers: TeamMember[] = [
     fullBio: "Dr. Marcus Johnson is board-certified in general psychiatry with a focus on comprehensive psychiatric evaluations and personalized medication management. He believes in a holistic approach, often collaborating with therapists to ensure patients receive well-rounded care.",
     specialties: ["Medication", "Mood Disorders", "ADHD"],
     education: "M.D., Harvard Medical School",
+    achievements: [
+      { label: "Clients Helped", value: "1,800+" },
+      { label: "Years Exp.", value: "12" },
+      { label: "Satisfaction", value: "97%" },
+    ],
   },
   {
     id: 3,
@@ -30,6 +40,11 @@ export const teamMembers: TeamMember[] = [
     fullBio: "Emily Williams specializes in trauma-informed care and couples relationship counseling. With a warm and empathetic approach, Emily creates a safe space for clients to explore past traumas, work through relationship conflicts, and rebuild trust and connection.",
     specialties: ["Couples Therapy", "Trauma & PTSD", "Family Dynamics"],
     education: "MSW, University of Michigan",
+    achievements: [
+      { label: "Sessions", value: "3,500+" },
+      { label: "Years Exp.", value: "10" },
+      { label: "Couples Helped", value: "600+" },
+    ],
   },
   {
     id: 4,
@@ -40,5 +55,10 @@ export const teamMembers: TeamMember[] = [
     fullBio: "Dr. James Wilson has dedicated his career to supporting children, adolescents, and their families. He uses play therapy, CBT, and family counseling to address behavioral issues, school-related anxiety, and early-stage mood disorders in a child-friendly environment.",
     specialties: ["Child Psychology", "Teen Issues", "Behavioral"],
     education: "Psy.D., Rutgers University",
+    achievements: [
+      { label: "Young Clients", value: "1,200+" },
+      { label: "Years Exp.", value: "8" },
+      { label: "Families Supported", value: "450+" },
+    ],
   },
 ];

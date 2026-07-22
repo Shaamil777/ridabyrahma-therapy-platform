@@ -68,7 +68,7 @@ export default function ServiceSection() {
         className="absolute inset-0 z-[2]"
         style={{
           background:
-            "linear-gradient(135deg, rgba(15,12,10,0.82) 0%, rgba(20,15,12,0.65) 50%, rgba(10,8,6,0.55) 100%)",
+            "linear-gradient(135deg, rgba(15,12,10,0.82) 0%, rgba(20,15,12,0.65) 50%, rgba(10,8,6,0.55) 50%)",
           opacity: isAnyHovered ? 1 : 0,
           transition: "opacity 1s cubic-bezier(0.16, 1, 0.3, 1)",
         }}

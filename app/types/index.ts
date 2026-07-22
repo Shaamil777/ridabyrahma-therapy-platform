@@ -28,6 +28,7 @@ export interface TeamMember {
   fullBio: string;
   specialties: string[];
   education: string;
+  achievements: { label: string; value: string }[];
 }
 
 export interface TrustItem {
