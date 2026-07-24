@@ -118,6 +118,13 @@ export default function HowTherapyWorksSection() {
               </div>
               <h3 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: "var(--primary)", fontFamily: "var(--font-cormorant-garamond)" }}>{item.title}</h3>
               <p className="text-lg md:text-xl leading-relaxed max-w-lg mx-auto" style={{ color: "var(--text-secondary)" }}>{item.description}</p>
+              
+              <span 
+                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-xs md:text-sm font-medium tracking-widest"
+                style={{ color: "var(--text-secondary)", opacity: 0.5, writingMode: "vertical-lr" }}
+              >
+                {i + 1} / {therapySteps.length}
+              </span>
             </div>
           ))}
         </div>

@@ -1,11 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
-type LoadingState = 'hidden' | 'fade-in' | 'transition' | 'complete';
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function GlobalLoadingSequence() {
-  const [loadingState, setLoadingState] = useState<LoadingState>('hidden');
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
     document.documentElement.classList.add("is-loading");
@@ -13,10 +12,12 @@ export default function GlobalLoadingSequence() {
     document.documentElement.classList.remove("loading-complete");
     document.body.classList.remove("loading-complete");
 
-    const t1 = setTimeout(() => setLoadingState('fade-in'), 100);
-    const t2 = setTimeout(() => setLoadingState('transition'), 2000);
-    const t3 = setTimeout(() => {
-      setLoadingState('complete');
+    const t1 = setTimeout(() => setStep(1), 300);
+    const t2 = setTimeout(() => setStep(2), 1100);
+    const t3 = setTimeout(() => setStep(3), 1900);
+    const t4 = setTimeout(() => setStep(4), 2600); // fade out
+    const t5 = setTimeout(() => {
+      setStep(5);
       document.documentElement.classList.remove("is-loading");
       document.body.classList.remove("is-loading");
       document.documentElement.classList.add("loading-complete");
@@ -27,39 +28,59 @@ export default function GlobalLoadingSequence() {
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
+      clearTimeout(t4);
+      clearTimeout(t5);
     };
   }, []);
 
-  return (
-    <>
-      {loadingState !== 'complete' && (
-        <div 
-          className={`fixed inset-0 z-50 bg-background flex items-center justify-center transition-opacity duration-1000 ease-in-out ${
-            loadingState === 'transition' ? 'opacity-0 pointer-events-none' : 'opacity-100'
-          }`}
-        />
-      )}
+  if (step === 5) return null;
 
-      <div 
-        className={`flex items-center justify-center overflow-hidden pointer-events-none transition-all ease-[cubic-bezier(0.25,1,0.5,1)] ${
-          loadingState === 'complete' ? 'absolute top-0 left-0 w-full h-[100vh] z-[30]' : 'fixed inset-0 z-[60]'
-        }`}
-        style={{
-          transitionDuration: loadingState === 'fade-in' ? '800ms' : loadingState === 'transition' ? '1200ms' : '0ms',
-          opacity: loadingState === 'hidden' ? 0 : loadingState === 'fade-in' ? 1 : 0.85,
-          transform: loadingState === 'hidden' || loadingState === 'fade-in' 
-            ? 'scale(0.2) rotate(-15deg)'
-            : 'scale(1) rotate(8deg)',
-        }}
-      >
-        <img
-          src="/images/leaf.png"
-          alt="Autumn Leaf"
-          className={`w-[20rem] h-[20rem] sm:w-[26rem] sm:h-[26rem] md:w-[32rem] md:h-[32rem] lg:w-[36rem] lg:h-[36rem] object-contain select-none filter drop-shadow-[0_20px_50px_rgba(0,0,0,0.06)] ${
-            loadingState === 'fade-in' ? 'animate-pulse' : ''
-          }`}
-        />
-      </div>
-    </>
+  return (
+    <motion.div 
+      className="fixed inset-0 z-[60] bg-background flex flex-col items-center justify-center font-cormorant text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#5A6B56] overflow-hidden"
+      initial={{ opacity: 1 }}
+      animate={{ opacity: step >= 4 ? 0 : 1 }}
+      transition={{ duration: 0.6 }}
+    >
+      <motion.div layout className="flex flex-col items-center text-center gap-4 md:gap-6">
+        <AnimatePresence>
+          {step >= 1 && (
+            <motion.div
+              key="step1"
+              layout
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              Unwind your worries
+            </motion.div>
+          )}
+          
+          {step >= 2 && (
+            <motion.div
+              key="step2"
+              layout
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              Soak in peace
+            </motion.div>
+          )}
+
+          {step >= 3 && (
+            <motion.div
+              key="step3"
+              layout
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              Restore your wellbeing
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </motion.div>
   );
 }
