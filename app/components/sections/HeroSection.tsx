@@ -1,16 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
 
 export default function HeroSection() {
-  const [isVideoReady, setIsVideoReady] = useState(false);
-
-  useEffect(() => {
-    // Wait for the global loading sequence to finish (3200ms)
-    const timer = setTimeout(() => {
-      setIsVideoReady(true);
-    }, 3200);
-    return () => clearTimeout(timer);
-  }, []);
+  const scrollToContact = () => {
+    const element = document.getElementById("contact");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <section id="home" className="min-h-screen py-20 md:py-28 overflow-hidden relative flex items-center justify-center bg-background">
@@ -91,7 +87,10 @@ export default function HeroSection() {
           Your path to better wellbeing, where calm meets care.
         </p>
 
-        <button className="hero-animate-up hero-delay-6 group relative bg-[#5A6B56] text-white px-8 py-3.5 sm:px-10 sm:py-4 rounded-full uppercase tracking-[0.15em] text-xs sm:text-sm font-semibold shadow-lg hover:shadow-2xl hover:shadow-[#5A6B56]/40 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center overflow-hidden">
+        <button 
+          onClick={scrollToContact}
+          className="hero-animate-up hero-delay-6 group relative bg-[#5A6B56] text-white px-8 py-3.5 sm:px-10 sm:py-4 rounded-full uppercase tracking-[0.15em] text-xs sm:text-sm font-semibold shadow-lg hover:shadow-2xl hover:shadow-[#5A6B56]/40 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center overflow-hidden"
+        >
           <div className="absolute inset-0 w-full h-full bg-[#4A5947] scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-300 ease-out z-0"></div>
           <span className="relative z-10 flex items-center gap-3">
             BOOK APPOINTMENT
@@ -102,24 +101,6 @@ export default function HeroSection() {
           </span>
         </button>
       </div>
-
-      {/* Foreground Video */}
-      <div className="absolute inset-0 pointer-events-none hero-animate-up hero-delay-2">
-        {isVideoReady && (
-          <video 
-            autoPlay 
-            loop 
-            muted 
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source src="/video/FG.webm" type="video/webm" />
-            <source src="/video/FG.mov" type="video/mp4" />
-            <source src="/video/FG.mov" type="video/quicktime" />
-          </video>
-        )}
-      </div>
-
     </section>
   );
 }

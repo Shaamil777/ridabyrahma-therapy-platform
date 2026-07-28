@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function GlobalLoadingSequence() {
   const [step, setStep] = useState(0);
@@ -12,17 +12,17 @@ export default function GlobalLoadingSequence() {
     document.documentElement.classList.remove("loading-complete");
     document.body.classList.remove("loading-complete");
 
-    const t1 = setTimeout(() => setStep(1), 300);
-    const t2 = setTimeout(() => setStep(2), 1100);
-    const t3 = setTimeout(() => setStep(3), 1900);
-    const t4 = setTimeout(() => setStep(4), 2600); // fade out
+    const t1 = setTimeout(() => setStep(1), 0);
+    const t2 = setTimeout(() => setStep(2), 800);
+    const t3 = setTimeout(() => setStep(3), 1600);
+    const t4 = setTimeout(() => setStep(4), 2400); // fade out
     const t5 = setTimeout(() => {
       setStep(5);
       document.documentElement.classList.remove("is-loading");
       document.body.classList.remove("is-loading");
       document.documentElement.classList.add("loading-complete");
       document.body.classList.add("loading-complete");
-    }, 3200);
+    }, 3900);
 
     return () => {
       clearTimeout(t1);
@@ -37,50 +37,36 @@ export default function GlobalLoadingSequence() {
 
   return (
     <motion.div 
-      className="fixed inset-0 z-[60] bg-background flex flex-col items-center justify-center font-cormorant text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#5A6B56] overflow-hidden"
+      className="fixed inset-0 z-[60] bg-background flex flex-col items-center justify-center font-cormorant text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#5A6B56] overflow-hidden select-none"
       initial={{ opacity: 1 }}
       animate={{ opacity: step >= 4 ? 0 : 1 }}
       transition={{ duration: 0.6 }}
     >
-      <motion.div layout className="flex flex-col items-center text-center gap-4 md:gap-6">
-        <AnimatePresence>
-          {step >= 1 && (
-            <motion.div
-              key="step1"
-              layout
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            >
-              Unwind your worries
-            </motion.div>
-          )}
-          
-          {step >= 2 && (
-            <motion.div
-              key="step2"
-              layout
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            >
-              Soak in peace
-            </motion.div>
-          )}
+      <div className="flex flex-col items-center justify-center text-center gap-4 md:gap-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={step >= 1 ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          Unwind your worries
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={step >= 2 ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          Soak in peace
+        </motion.div>
 
-          {step >= 3 && (
-            <motion.div
-              key="step3"
-              layout
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            >
-              Restore your wellbeing
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={step >= 3 ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          Restore your wellbeing
+        </motion.div>
+      </div>
     </motion.div>
   );
 }
