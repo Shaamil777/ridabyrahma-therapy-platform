@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import FadeIn from "@/app/components/ui/FadeIn";
 
 function ScrollRevealRida() {
@@ -9,12 +9,19 @@ function ScrollRevealRida() {
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 95%", "end 70%"],
+    offset: ["start 95%", "end 65%"],
   });
 
-  const clipPath = useTransform(scrollYProgress, [0, 1], ["inset(100% 0 0 0)", "inset(0% 0 0 0)"]);
-  const y = useTransform(scrollYProgress, [0, 1], [40, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [0.2, 1]);
+  // Apply spring interpolation to smooth out mobile scroll steps and prevent stutter/lag
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 250,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  const clipPath = useTransform(smoothProgress, [0, 1], ["inset(100% 0 0 0)", "inset(0% 0 0 0)"]);
+  const y = useTransform(smoothProgress, [0, 1], [40, 0]);
+  const opacity = useTransform(smoothProgress, [0, 1], [0.2, 1]);
 
   return (
     <div ref={ref} className="relative w-full flex justify-center pt-12 md:pt-20 pb-4 overflow-hidden">
@@ -25,7 +32,9 @@ function ScrollRevealRida() {
           opacity,
           color: "var(--primary)",
           fontFamily: "var(--font-cormorant-garamond)",
-          willChange: "transform, opacity, clip-path",
+          willChange: "transform, opacity",
+          WebkitFontSmoothing: "antialiased",
+          backfaceVisibility: "hidden",
         }}
         className="text-[28vw] md:text-[25vw] leading-none font-bold tracking-tighter select-none transform-gpu"
       >
