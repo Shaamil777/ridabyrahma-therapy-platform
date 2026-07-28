@@ -38,6 +38,17 @@ export default function Navbar() {
     setIsMobileMenuOpen(false);
   };
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <>
       <nav className={`fixed left-0 right-0 z-50 font-quicksand transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] flex justify-center ${
@@ -136,52 +147,123 @@ export default function Navbar() {
               </div>
             </button>
           </div>
-
-          <div className={`absolute top-[calc(100%+1rem)] left-0 right-0 origin-top transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
-            isMobileMenuOpen 
-              ? 'opacity-100 pointer-events-auto translate-y-0 scale-y-100' 
-              : 'opacity-0 pointer-events-none -translate-y-4 scale-y-95'
-          }`}>
-            <div className="bg-background/95 backdrop-blur-2xl border border-secondary-bg shadow-xl rounded-2xl p-4 overflow-hidden">
-              <div className="flex flex-col space-y-1">
-                {navLinks.map((link) => (
-                  <button
-                    key={link.id}
-                    onClick={() => scrollToSection(link.id)}
-                    className={`text-left px-4 py-3 rounded-xl text-base font-semibold transition-all duration-300 font-quicksand flex items-center ${
-                      activeSection === link.id 
-                        ? 'text-accent bg-accent/10' 
-                        : 'text-primary hover:text-accent hover:bg-secondary-bg/50'
-                    }`}
-                  >
-                    {link.label}
-                    {activeSection === link.id && (
-                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-accent"></span>
-                    )}
-                  </button>
-                ))}
-                
-                <div className="h-px bg-secondary-bg my-3"></div>
-                
-                <a
-                  href="tel:+1234567890"
-                  className="flex items-center justify-center space-x-2 w-full py-3 text-primary hover:text-accent transition-colors duration-300 font-medium"
-                >
-                  <Icon name="phone" className="w-5 h-5" />
-                  <span>Call Us</span>
-                </a>
-                
-                <button 
-                  onClick={() => scrollToSection('contact')}
-                  className="w-full bg-primary hover:bg-primary-hover text-surface px-4 py-3.5 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 font-quicksand shadow-sm active:scale-95 mt-2"
-                >
-                  BOOK NOW
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
       </nav>
+
+      {/* ── Full-Screen Mobile Menu Overlay ── */}
+      <div
+        className={`fixed inset-0 z-[100] bg-[#FDFBF7] flex flex-col justify-between px-6 py-8 sm:px-10 sm:py-10 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+          isMobileMenuOpen
+            ? 'opacity-100 pointer-events-auto translate-y-0'
+            : 'opacity-0 pointer-events-none -translate-y-full'
+        }`}
+      >
+        {/* Decorative Ambient Background Mesh */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+          <div
+            className="absolute top-1/4 right-0 w-[70%] h-[60%] rounded-full opacity-50"
+            style={{
+              background:
+                'radial-gradient(circle, rgba(239,230,221,0.95) 0%, rgba(244,213,194,0.45) 50%, rgba(253,251,247,0) 70%)',
+            }}
+          />
+          <div
+            className="absolute bottom-1/4 left-0 w-[60%] h-[50%] rounded-full opacity-45"
+            style={{
+              background:
+                'radial-gradient(circle, rgba(232,195,176,0.85) 0%, rgba(253,251,247,0) 70%)',
+            }}
+          />
+        </div>
+
+        {/* Top Header: Brand & Close Button */}
+        <div className="flex items-center justify-between w-full">
+          <div className="flex flex-col">
+            <button
+              onClick={() => scrollToSection('home')}
+              className="text-2xl font-bold tracking-tight text-[#5A6B56] text-left transition-colors hover:text-[#8C5A3E]"
+              style={{ fontFamily: 'var(--font-cormorant-garamond)' }}
+            >
+              Rida By Rahma
+            </button>
+            <span className="text-[9px] tracking-[0.25em] uppercase text-[#8C5A3E] font-semibold font-quicksand mt-0.5">
+              Psychiatry & Wellness
+            </span>
+          </div>
+
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="p-3 rounded-full border border-[#5A6B56]/20 bg-white/70 text-[#5A6B56] hover:bg-[#5A6B56] hover:text-[#FDFBF7] transition-all shadow-sm active:scale-95"
+            aria-label="Close menu"
+          >
+            <Icon name="close" className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Center: Editorial Numbered Navigation Links */}
+        <div className="flex flex-col w-full max-w-xs mx-auto my-auto py-6">
+          {navLinks.map((link, idx) => {
+            const indexStr = `0${idx + 1}`;
+            const isActive = activeSection === link.id;
+
+            return (
+              <button
+                key={link.id}
+                onClick={() => scrollToSection(link.id)}
+                className={`group flex items-center justify-between py-3.5 border-b border-[#5A6B56]/15 transition-all duration-300 text-left ${
+                  isActive
+                    ? 'text-[#8C5A3E] pl-2'
+                    : 'text-[#5A6B56] hover:text-[#8C5A3E] hover:pl-2'
+                }`}
+              >
+                <div className="flex items-baseline space-x-4">
+                  <span className="text-xs font-quicksand font-semibold tracking-[0.25em] text-[#8C5A3E]/70 uppercase">
+                    {indexStr}
+                  </span>
+                  <span
+                    className={`text-3xl sm:text-4xl tracking-wide transition-all ${
+                      isActive ? 'font-medium italic' : 'font-normal'
+                    }`}
+                    style={{ fontFamily: 'var(--font-cormorant-garamond)' }}
+                  >
+                    {link.label}
+                  </span>
+                </div>
+
+                <span
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    isActive
+                      ? 'bg-[#8C5A3E] opacity-100 scale-100'
+                      : 'bg-[#8C5A3E] opacity-0 scale-0 group-hover:opacity-60 group-hover:scale-100'
+                  }`}
+                />
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Bottom: Professional Psychiatric Care CTA & Contact */}
+        <div className="flex flex-col space-y-3.5 w-full max-w-xs mx-auto">
+          <p className="text-[10px] uppercase tracking-[0.22em] text-[#5A6B56]/70 text-center font-semibold font-quicksand">
+            Confidential Online Psychiatric Care
+          </p>
+
+          <a
+            href="tel:+1234567890"
+            className="flex items-center justify-center space-x-2.5 py-3 px-4 rounded-full border border-[#8C5A3E]/25 bg-white/70 text-[#8C5A3E] hover:bg-[#8C5A3E] hover:text-white transition-all duration-300 font-semibold text-xs tracking-wider uppercase font-quicksand"
+          >
+            <Icon name="phone" className="w-4 h-4" />
+            <span>Call Our Care Team</span>
+          </a>
+
+          <button
+            onClick={() => scrollToSection('contact')}
+            className="w-full bg-[#5A6B56] hover:bg-[#465443] text-[#FDFBF7] py-4 rounded-full text-xs font-bold tracking-[0.22em] uppercase transition-all duration-300 font-quicksand shadow-lg hover:shadow-xl active:scale-95"
+          >
+            BOOK APPOINTMENT
+          </button>
+        </div>
+      </div>
     </>
   );
 }

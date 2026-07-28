@@ -1,14 +1,30 @@
-"use client";
-
+import dynamic from "next/dynamic";
 import GlobalLoadingSequence from "./components/ui/GlobalLoadingSequence";
 import HeroSection from "./components/sections/HeroSection";
-import TrustSection from "./components/sections/TrustSection";
-import AboutSection from "./components/sections/AboutSection";
-import HowTherapyWorksSection from "./components/sections/HowTherapyWorksSection";
-import ServiceSection from "./components/sections/ServiceSection";
-import TeamSection from "./components/sections/TeamSection";
-import FaqSection from "./components/sections/FaqSection";
-import ContactSection from "./components/sections/ContactSection";
+
+// Lazy loading and automatic code-splitting for below-the-fold sections
+const TrustSection = dynamic(() => import("./components/sections/TrustSection"), {
+  ssr: true,
+});
+const AboutSection = dynamic(() => import("./components/sections/AboutSection"), {
+  ssr: true,
+});
+const HowTherapyWorksSection = dynamic(
+  () => import("./components/sections/HowTherapyWorksSection"),
+  { ssr: true }
+);
+const ServiceSection = dynamic(() => import("./components/sections/ServiceSection"), {
+  ssr: true,
+});
+const TeamSection = dynamic(() => import("./components/sections/TeamSection"), {
+  ssr: true,
+});
+const FaqSection = dynamic(() => import("./components/sections/FaqSection"), {
+  ssr: true,
+});
+const ContactSection = dynamic(() => import("./components/sections/ContactSection"), {
+  ssr: true,
+});
 
 export default function Home() {
   return (
@@ -25,3 +41,4 @@ export default function Home() {
     </main>
   );
 }
+

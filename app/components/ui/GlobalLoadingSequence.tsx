@@ -22,7 +22,7 @@ export default function GlobalLoadingSequence() {
       document.body.classList.remove("is-loading");
       document.documentElement.classList.add("loading-complete");
       document.body.classList.add("loading-complete");
-    }, 3900);
+    }, 2900);
 
     return () => {
       clearTimeout(t1);

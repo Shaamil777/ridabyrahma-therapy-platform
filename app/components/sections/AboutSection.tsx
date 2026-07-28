@@ -9,15 +9,15 @@ function ScrollRevealRida() {
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 90%", "end 60%"],
+    offset: ["start 95%", "end 70%"],
   });
 
   const clipPath = useTransform(scrollYProgress, [0, 1], ["inset(100% 0 0 0)", "inset(0% 0 0 0)"]);
-  const y = useTransform(scrollYProgress, [0, 1], [150, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [40, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.2, 1]);
 
   return (
-    <div ref={ref} className="relative w-full flex justify-center pt-20 pb-4">
+    <div ref={ref} className="relative w-full flex justify-center pt-12 md:pt-20 pb-4 overflow-hidden">
       <motion.h2
         style={{
           clipPath,
@@ -25,8 +25,9 @@ function ScrollRevealRida() {
           opacity,
           color: "var(--primary)",
           fontFamily: "var(--font-cormorant-garamond)",
+          willChange: "transform, opacity, clip-path",
         }}
-        className="text-[30vw] md:text-[25vw] leading-none font-bold tracking-tighter select-none"
+        className="text-[28vw] md:text-[25vw] leading-none font-bold tracking-tighter select-none transform-gpu"
       >
         RIDA
       </motion.h2>

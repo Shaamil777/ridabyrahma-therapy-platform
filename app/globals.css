@@ -202,43 +202,36 @@ body.loading-complete footer {
 @keyframes heroBlurFadeInUp {
   0% {
     opacity: 0;
-    transform: translateY(30px);
-    filter: blur(12px);
+    transform: translate3d(0, 25px, 0);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
-    filter: blur(0px);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes heroTitleReveal {
   0% {
     opacity: 0;
-    transform: translateY(50px) scale(1.05);
-    filter: blur(15px);
+    transform: translate3d(0, 40px, 0) scale(1.03);
     letter-spacing: 0.05em;
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0px);
-    letter-spacing: normal; /* Wait, tracking-tight is in the class, so we shouldn't hardcode 'normal' if the class overrides it, but the class is on the element so animation might override it. Actually tracking-tight is -0.025em. Let's just animate letter-spacing directly to -0.025em or drop the letter-spacing animation to avoid conflict. */
+    transform: translate3d(0, 0, 0) scale(1);
+    letter-spacing: normal;
   }
 }
 
-/* Let's fix the letter-spacing in the title reveal so it matches tracking-tight */
 @keyframes heroTitleRevealFixed {
   0% {
     opacity: 0;
-    transform: translateY(50px) scale(1.05);
-    filter: blur(15px);
-    letter-spacing: 0.1em;
+    transform: translate3d(0, 40px, 0) scale(1.03);
+    letter-spacing: 0.05em;
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0px);
+    transform: translate3d(0, 0, 0) scale(1);
     letter-spacing: -0.025em; /* tracking-tight */
   }
 }

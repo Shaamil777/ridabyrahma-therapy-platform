@@ -11,18 +11,19 @@ export default function HeroSection() {
   return (
     <section id="home" className="min-h-screen py-20 md:py-28 overflow-hidden relative flex items-center justify-center bg-background">
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="hero-mesh-1 absolute -top-[20%] -right-[10%] w-[70%] h-[70%] rounded-full blur-[120px]" />
-        <div className="hero-mesh-2 absolute -bottom-[20%] -left-[10%] w-[60%] h-[60%] rounded-full blur-[100px]" />
-        <div className="hero-mesh-3 absolute top-[20%] left-[20%] w-[50%] h-[50%] rounded-full blur-[140px]" />
+        <div className="hero-mesh-1 absolute -top-[20%] -right-[10%] w-[70%] h-[70%] rounded-full opacity-80" />
+        <div className="hero-mesh-2 absolute -bottom-[20%] -left-[10%] w-[60%] h-[60%] rounded-full opacity-80" />
+        <div className="hero-mesh-3 absolute top-[20%] left-[20%] w-[50%] h-[50%] rounded-full opacity-70" />
       </div>
 
-      <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none opacity-90 mix-blend-multiply">
-        <div className="relative w-[24rem] h-[24rem] sm:w-[32rem] sm:h-[32rem] md:w-[45rem] md:h-[45rem]">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[80%] bg-[#EFE6DD] rounded-[40%_60%_70%_30%/40%_50%_60%_50%] blur-[50px] opacity-80"></div>
-          <div className="absolute top-[40%] left-[55%] -translate-x-1/2 -translate-y-1/2 w-[70%] h-[85%] bg-[#F4D5C2] rounded-[60%_40%_30%_70%/60%_30%_70%_40%] blur-[60px] opacity-70"></div>
-          <div className="absolute top-[55%] left-[45%] -translate-x-1/2 -translate-y-1/2 w-[80%] h-[70%] bg-[#FDFBF7] rounded-[30%_70%_70%_30%/30%_30%_70%_70%] blur-[40px] opacity-90"></div>
-          <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-[#E8C3B0] rounded-[50%_50%_20%_80%/25%_80%_20%_75%] blur-[70px] opacity-60"></div>
-        </div>
+      <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none opacity-90">
+        <div
+          className="w-[24rem] h-[24rem] sm:w-[32rem] sm:h-[32rem] md:w-[45rem] md:h-[45rem] rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(239,230,221,0.85) 0%, rgba(244,213,194,0.45) 50%, rgba(253,251,247,0) 70%)",
+          }}
+        />
       </div>
 
       <div className="hidden lg:flex flex-col absolute left-[4%] xl:left-[8%] top-[35%] max-w-[220px] xl:max-w-[280px] z-20 hero-animate-up hero-delay-4 mix-blend-multiply">
