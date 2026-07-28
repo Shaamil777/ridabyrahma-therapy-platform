@@ -15,9 +15,9 @@ export default function SmoothScrolling({
         duration: 1.6,
         smoothWheel: true,
         syncTouch: true,
-        syncTouchLerp: 0.04,
-        touchInertiaExponent: 1.2,
-        touchMultiplier: 0.5,
+        syncTouchLerp: 0.075,
+        touchInertiaExponent: 1.5,
+        touchMultiplier: 0.85,
       }}
     >
       {children}
