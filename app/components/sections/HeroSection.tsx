@@ -1,106 +1,271 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import { navLinks } from "@/app/data/navigation";
+
 export default function HeroSection() {
-  const scrollToContact = () => {
-    const element = document.getElementById("contact");
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  return (
-    <section id="home" className="min-h-screen py-20 md:py-28 overflow-hidden relative flex items-center justify-center bg-background">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="hero-mesh-1 absolute -top-[20%] -right-[10%] w-[70%] h-[70%] rounded-full opacity-80" />
-        <div className="hero-mesh-2 absolute -bottom-[20%] -left-[10%] w-[60%] h-[60%] rounded-full opacity-80" />
-        <div className="hero-mesh-3 absolute top-[20%] left-[20%] w-[50%] h-[50%] rounded-full opacity-70" />
-      </div>
+  // 1. Detect when global loading has completed
+  useEffect(() => {
+    const checkLoading = () => {
+      if (document.body.classList.contains("loading-complete")) {
+        setIsLoaded(true);
+        return true;
+      }
+      return false;
+    };
 
-      <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none opacity-90">
+    if (checkLoading()) return;
+
+    const interval = setInterval(() => {
+      if (checkLoading()) {
+        clearInterval(interval);
+      }
+    }, 100);
+
+    const fallbackTimeout = setTimeout(() => {
+      setIsLoaded(true);
+    }, 3200);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(fallbackTimeout);
+    };
+  }, []);
+
+  // 2. Observe when Hero section is in viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.2) {
+            setIsInView(true);
+          } else if (!entry.isIntersecting && entry.intersectionRatio < 0.05) {
+            setIsInView(false);
+          }
+        });
+      },
+      { threshold: [0, 0.05, 0.2, 0.5] }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // 3. Play video when loaded and in view; stop at last frame
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isLoaded && isInView) {
+      try {
+        if (video.readyState >= 1) {
+          video.currentTime = 0;
+        }
+      } catch {
+        // Ignore if metadata is not ready yet
+      }
+      video.play().catch((err) => {
+        console.log("Video autoplay prevented:", err);
+      });
+    } else if (!isInView) {
+      video.pause();
+    }
+  }, [isLoaded, isInView]);
+
+  const handleLoadedMetadata = () => {
+    if (isLoaded && isInView && videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+    }
+  };
+
+  const handleVideoEnded = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
+  return (
+    <section
+      ref={sectionRef}
+      id="home"
+      className="min-h-screen relative flex flex-col justify-between bg-[#FAF8F5] overflow-hidden text-[#5A6B56]"
+    >
+      {/* ═ Subtle Editorial Background Mesh ═ */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
         <div
-          className="w-[24rem] h-[24rem] sm:w-[32rem] sm:h-[32rem] md:w-[45rem] md:h-[45rem] rounded-full"
+          className="absolute -top-[15%] -right-[10%] w-[60%] h-[60%] rounded-full opacity-30"
           style={{
             background:
-              "radial-gradient(circle, rgba(239,230,221,0.85) 0%, rgba(244,213,194,0.45) 50%, rgba(253,251,247,0) 70%)",
+              "radial-gradient(circle, rgba(239,230,221,0.8) 0%, rgba(250,248,245,0) 70%)",
+          }}
+        />
+        <div
+          className="absolute -bottom-[15%] -left-[10%] w-[50%] h-[50%] rounded-full opacity-25"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(214,204,192,0.8) 0%, rgba(250,248,245,0) 70%)",
           }}
         />
       </div>
 
-      <div className="hidden lg:flex flex-col absolute left-[4%] xl:left-[8%] top-[35%] max-w-[220px] xl:max-w-[280px] z-20 hero-animate-up hero-delay-4 mix-blend-multiply">
-        <p className="font-cormorant text-[#5A6B56] text-xl xl:text-2xl italic leading-relaxed mb-4 opacity-90">
-          "The curious paradox is that when I accept myself just as I am, then I can change."
-        </p>
-        <div className="flex items-center gap-3">
-          <div className="h-[1px] w-8 bg-[#8C5A3E] opacity-40"></div>
-          <p className="text-[#8C5A3E] text-[10px] xl:text-xs uppercase tracking-[0.2em] font-semibold opacity-90">
-            Carl Rogers
-          </p>
-        </div>
-      </div>
+      {/* ═══════════════════════════════════════
+          TOP NAVBAR — Minimal European Editorial Bar
+          ═══════════════════════════════════════ */}
+      <header className="w-full px-6 sm:px-12 lg:px-16 py-6 sm:py-8 flex items-center justify-between z-20">
+        {/* Left: Monogram Logo & Primary Links */}
+        <div className="flex items-center gap-6 sm:gap-10">
+          <button
+            onClick={() => scrollToSection("home")}
+            className="flex items-center gap-2 group"
+          >
+            <span
+              className="text-2xl sm:text-3xl font-normal tracking-tight text-[#5A6B56] group-hover:text-[#8C5A3E] transition-colors"
+              style={{ fontFamily: "var(--font-cormorant-garamond)" }}
+            >
+              Riḍā
+            </span>
+          </button>
 
-      <div className="hidden lg:flex flex-col absolute right-[4%] xl:right-[8%] top-[45%] max-w-[220px] xl:max-w-[280px] text-right items-end z-20 hero-animate-up hero-delay-5 mix-blend-multiply">
-        <p className="font-cormorant text-[#5A6B56] text-xl xl:text-2xl italic leading-relaxed mb-4 opacity-90">
-          "Who looks outside, dreams; who looks inside, awakes."
-        </p>
-        <div className="flex items-center justify-end gap-3">
-          <p className="text-[#8C5A3E] text-[10px] xl:text-xs uppercase tracking-[0.2em] font-semibold opacity-90">
-            Carl Jung
-          </p>
-          <div className="h-[1px] w-8 bg-[#8C5A3E] opacity-40"></div>
-        </div>
-      </div>
-
-      <div className="relative z-20 flex flex-col items-center justify-center text-center mt-[-55vh] max-w-5xl mx-auto px-4">
-        <div className="hero-animate-up hero-delay-1 flex items-center justify-center gap-3 text-[#6A7C64] uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6">
-            <path d="M12 21C12 21 11.5 16 16 11.5C20.5 7 22.5 5 22.5 5C22.5 5 19.5 6.5 15 11C10.5 15.5 12 21 12 21Z" fill="#6A7C64" />
-            <path d="M12 21C12 21 11.5 17 8.5 14C5.5 11 4 9 4 9C4 9 6.5 10.5 9.5 13.5C12.5 16.5 12 21 12 21Z" fill="#6A7C64" />
-            <path d="M12 21C12 21 12.5 15 9 10.5C5.5 6 4.5 3 4.5 3C4.5 3 7.5 5.5 11 10C14.5 14.5 12 21 12 21Z" fill="#6A7C64" />
-          </svg>
-          <span>WELCOME TO RIDA BY RAHMA</span>
+          <nav className="hidden md:flex items-center gap-6 text-xs sm:text-sm font-cormorant font-normal text-[#5A6B56] tracking-wide">
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => scrollToSection(link.id)}
+                className="hover:text-[#8C5A3E] transition-colors cursor-pointer"
+              >
+                {link.label}
+              </button>
+            ))}
+          </nav>
         </div>
 
-        <h1 className="hero-animate-scale hero-delay-2 text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[11rem] font-cormorant font-semibold text-[#3A4B35] leading-[1.1] tracking-tight -mt-1 sm:-mt-2 md:-mt-3 lg:-mt-4">
-          Breathe
-        </h1>
-      </div>
-
-      <div className="absolute bottom-[2vh] sm:bottom-[5vh] lg:bottom-[8vh] left-0 right-0 z-20 flex flex-col items-center justify-center text-center px-4 w-full">
-        <div className="hero-animate-up hero-delay-3 flex flex-wrap justify-center items-center gap-2 sm:gap-4 text-[#8C5A3E] text-lg sm:text-xl md:text-2xl font-cormorant font-semibold mb-4">
-          <span>Unwind your worries</span>
-          <span className="text-[#D3C4B7] text-xl">•</span>
-          <span>Soak in peace</span>
-          <span className="text-[#D3C4B7] text-xl">•</span>
-          <span>Restore your wellbeing</span>
-        </div>
-
-        <div className="hero-animate-expand hero-delay-4 flex items-center justify-center gap-4 w-full max-w-md mb-4">
-          <div className="h-[1px] bg-[#D3C4B7] flex-1 opacity-60"></div>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-[#6A7C64]">
-            <path d="M12 21C12 21 11.5 16 16 11.5C20.5 7 22.5 5 22.5 5C22.5 5 19.5 6.5 15 11C10.5 15.5 12 21 12 21Z" fill="currentColor" />
-            <path d="M12 21C12 21 11.5 17 8.5 14C5.5 11 4 9 4 9C4 9 6.5 10.5 9.5 13.5C12.5 16.5 12 21 12 21Z" fill="currentColor" />
-            <path d="M12 21C12 21 12.5 15 9 10.5C5.5 6 4.5 3 4.5 3C4.5 3 7.5 5.5 11 10C14.5 14.5 12 21 12 21Z" fill="currentColor" />
-          </svg>
-          <div className="h-[1px] bg-[#D3C4B7] flex-1 opacity-60"></div>
-        </div>
-
-        <p className="hero-animate-up hero-delay-5 text-[#4A5D4E] text-base sm:text-lg mb-6 max-w-xl">
-          Your path to better wellbeing, where calm meets care.
-        </p>
-
-        <button 
-          onClick={scrollToContact}
-          className="hero-animate-up hero-delay-6 group relative bg-[#5A6B56] text-white px-8 py-3.5 sm:px-10 sm:py-4 rounded-full uppercase tracking-[0.15em] text-xs sm:text-sm font-semibold shadow-lg hover:shadow-2xl hover:shadow-[#5A6B56]/40 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center overflow-hidden"
-        >
-          <div className="absolute inset-0 w-full h-full bg-[#4A5947] scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-300 ease-out z-0"></div>
-          <span className="relative z-10 flex items-center gap-3">
-            BOOK APPOINTMENT
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
+        {/* Center: Philosophy Title (like "Word of the day / Discovery") */}
+        <div className="hidden lg:flex flex-col items-center text-center">
+          <span
+            className="text-xs italic text-[#8C5A3E] font-normal leading-tight"
+            style={{ fontFamily: "var(--font-cormorant-garamond)" }}
+          >
+            Philosophy of care
           </span>
-        </button>
+          <span
+            className="text-sm text-[#5A6B56] font-normal tracking-wider"
+            style={{ fontFamily: "var(--font-cormorant-garamond)" }}
+          >
+            Sanctuary
+          </span>
+        </div>
+
+        {/* Right: Pill CTA Button */}
+        <div>
+          <button
+            onClick={() => scrollToSection("contact")}
+            className="bg-[#6A7C64] hover:bg-[#5A6B56] text-[#FAF8F5] px-6 sm:px-7 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-cormorant font-medium tracking-wide transition-colors shadow-sm cursor-pointer"
+          >
+            Get in touch
+          </button>
+        </div>
+      </header>
+
+      {/* ═══════════════════════════════════════
+          CENTER EDITORIAL AREA
+          ═══════════════════════════════════════ */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8 max-w-7xl mx-auto w-full py-8 sm:py-12 z-20">
+        {/* Monumental Centered Serif Headline (like "MeLine Gobet") */}
+        <h1
+          className="w-full text-center font-normal text-[#5A6B56] tracking-tight leading-[0.9] select-none"
+          style={{
+            fontFamily: "var(--font-cormorant-garamond)",
+            fontSize: "clamp(3.8rem, 11vw, 9rem)",
+          }}
+        >
+          Rida By Rahma
+        </h1>
+
+        {/* Editorial Subtitle Row Below Headline */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-4 items-center mt-6 sm:mt-10 px-4 sm:px-12">
+          {/* Left Column: Title / Role (like "Kinesiologue certifiee") */}
+          <div className="md:col-span-5 text-center md:text-left">
+            <p
+              className="text-xl sm:text-2xl md:text-3xl text-[#5A6B56] font-normal tracking-wide"
+              style={{ fontFamily: "var(--font-cormorant-garamond)" }}
+            >
+              Psychiatry &amp; Wellness
+            </p>
+          </div>
+
+          {/* Right Column: Decorative Arch & Editorial Quote */}
+          <div className="md:col-span-6 md:col-start-7 flex flex-col items-center md:items-start text-center md:text-left">
+            {/* Delicate Arch SVG Line */}
+            <svg
+              width="110"
+              height="16"
+              viewBox="0 0 110 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="text-[#5A6B56]/50 mb-2"
+            >
+              <path
+                d="M1 14C25 3 85 3 109 14"
+                stroke="currentColor"
+                strokeWidth="0.8"
+                strokeLinecap="round"
+              />
+            </svg>
+            <p
+              className="text-xs sm:text-sm text-[#5A6B56]/80 leading-relaxed max-w-xs font-normal"
+              style={{ fontFamily: "var(--font-cormorant-garamond)" }}
+            >
+              For emotional liberation, holistic healing, and reconnecting with yourself.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════
+          BOTTOM CENTERPIECE (Bloom Video with Editorial Rules)
+          ═══════════════════════════════════════ */}
+      <div className="w-full px-6 sm:px-12 lg:px-24 pb-10 sm:pb-14 flex items-center justify-center gap-4 sm:gap-8 z-20">
+        {/* Left Rule with Circle Dot */}
+        <div className="flex-1 flex items-center gap-2 max-w-xs sm:max-w-sm">
+          <span className="w-1.5 h-1.5 rounded-full border border-[#5A6B56]/40 shrink-0" />
+          <div className="h-[0.5px] w-full bg-[#5A6B56]/25" />
+        </div>
+
+        {/* Center: Bloom Video in an Elegant Circular Medallion */}
+        <div className="relative shrink-0 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full overflow-hidden border border-[#5A6B56]/25 shadow-md bg-[#FAF8F5]">
+          <video
+            ref={videoRef}
+            src="/video/bloom.mp4"
+            muted
+            playsInline
+            preload="auto"
+            onEnded={handleVideoEnded}
+            onLoadedMetadata={handleLoadedMetadata}
+            className="w-full h-full object-cover opacity-90"
+          />
+        </div>
+
+        {/* Right Rule with Circle Dot */}
+        <div className="flex-1 flex items-center justify-end gap-2 max-w-xs sm:max-w-sm">
+          <div className="h-[0.5px] w-full bg-[#5A6B56]/25" />
+          <span className="w-1.5 h-1.5 rounded-full border border-[#5A6B56]/40 shrink-0" />
+        </div>
       </div>
     </section>
   );

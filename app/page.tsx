@@ -31,10 +31,10 @@ export default function Home() {
     <main className="relative overflow-x-hidden">
       <GlobalLoadingSequence />
       <HeroSection />
-      <TrustSection />
       <AboutSection />
-      <HowTherapyWorksSection />
       <ServiceSection />
+      <HowTherapyWorksSection />
+      <TrustSection />
       <TeamSection />
       <FaqSection />
       <ContactSection />

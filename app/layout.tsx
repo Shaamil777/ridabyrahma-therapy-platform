@@ -1,5 +1,4 @@
 import "./globals.css";
-import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import FloatingToast from "./components/ui/FloatingToast";
 import SmoothScrolling from "./components/ui/SmoothScrolling";
@@ -32,7 +31,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${quicksand.variable} ${cormorantGaramond.variable} font-quicksand`}>
         <SmoothScrolling>
-          <Navbar />
           {children}
           <Footer />
           <FloatingToast />
