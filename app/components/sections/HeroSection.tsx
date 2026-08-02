@@ -129,20 +129,20 @@ export default function HeroSection() {
           ═══════════════════════════════════════ */}
       <header className="w-full px-6 sm:px-12 lg:px-16 py-6 sm:py-8 flex items-center justify-between z-20">
         {/* Left: Monogram Logo & Primary Links */}
-        <div className="flex items-center gap-6 sm:gap-10">
+        <div className="flex items-center gap-8 sm:gap-12">
           <button
             onClick={() => scrollToSection("home")}
-            className="flex items-center gap-2 group"
+            className="flex items-center gap-2 group cursor-pointer"
           >
             <span
-              className="text-2xl sm:text-3xl font-normal tracking-tight text-[#5A6B56] group-hover:text-[#8C5A3E] transition-colors"
+              className="text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight text-[#5A6B56] group-hover:text-[#8C5A3E] transition-colors"
               style={{ fontFamily: "var(--font-cormorant-garamond)" }}
             >
               Riḍā
             </span>
           </button>
 
-          <nav className="hidden md:flex items-center gap-6 text-xs sm:text-sm font-cormorant font-normal text-[#5A6B56] tracking-wide">
+          <nav className="hidden md:flex items-center gap-7 lg:gap-9 text-base sm:text-lg md:text-xl font-cormorant font-normal text-[#5A6B56] tracking-wide">
             {navLinks.map((link) => (
               <button
                 key={link.id}
@@ -158,13 +158,13 @@ export default function HeroSection() {
         {/* Center: Philosophy Title (like "Word of the day / Discovery") */}
         <div className="hidden lg:flex flex-col items-center text-center">
           <span
-            className="text-xs italic text-[#8C5A3E] font-normal leading-tight"
+            className="text-base sm:text-lg italic text-[#8C5A3E] font-normal leading-tight"
             style={{ fontFamily: "var(--font-cormorant-garamond)" }}
           >
             Philosophy of care
           </span>
           <span
-            className="text-sm text-[#5A6B56] font-normal tracking-wider"
+            className="text-lg sm:text-xl md:text-2xl text-[#5A6B56] font-normal tracking-wider"
             style={{ fontFamily: "var(--font-cormorant-garamond)" }}
           >
             Sanctuary
@@ -175,7 +175,7 @@ export default function HeroSection() {
         <div>
           <button
             onClick={() => scrollToSection("contact")}
-            className="bg-[#6A7C64] hover:bg-[#5A6B56] text-[#FAF8F5] px-6 sm:px-7 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-cormorant font-medium tracking-wide transition-colors shadow-sm cursor-pointer"
+            className="bg-[#6A7C64] hover:bg-[#5A6B56] text-[#FAF8F5] px-7 sm:px-8 py-3 sm:py-3.5 rounded-full text-sm sm:text-base font-cormorant font-medium tracking-wide transition-colors shadow-sm cursor-pointer"
           >
             Get in touch
           </button>
