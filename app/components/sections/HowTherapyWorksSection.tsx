@@ -57,34 +57,63 @@ export default function HowTherapyWorksSection() {
         }
       });
 
-    // 1. Loop through each step: set initial hidden state, then create animation sequence
-    stepsRef.current.forEach((step, i) => {
-      if (!step) return;
+    // 1. First step (i === 0) is STATIC with full opacity by default - no initial fade animation
+    const firstStep = stepsRef.current[0];
+    if (firstStep) {
+      gsap.set(firstStep, { opacity: 1, y: 0 });
+      // Hold the first step visible without animating it at the start
+      tl.to({}, { duration: 1 });
+      // When scrolling progresses, fade out the first step
+      tl.fromTo(
+        firstStep,
+        { opacity: 1, y: 0 },
+        {
+          opacity: 0,
+          y: -30,
+          duration: 1,
+          ease: "power2.in",
+          immediateRender: false,
+        }
+      );
+    }
 
-      // Initial state: each step hidden and pushed down
+    // 2. Remaining steps (i = 1, 2, 3) start hidden, then reveal on scroll
+    for (let i = 1; i < stepsRef.current.length; i++) {
+      const step = stepsRef.current[i];
+      if (!step) continue;
+
       gsap.set(step, { opacity: 0, y: 30 });
 
-      // Fade In (overlap with previous step's fade out if not the first step)
-      tl.to(step, { 
-        opacity: 1, 
-        y: 0,
-        duration: 1,
-        ease: "power2.out"
-      }, i === 0 ? undefined : "-=0.5");
+      // Fade In (overlap with previous step's fade out)
+      tl.fromTo(
+        step,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power2.out",
+          immediateRender: false,
+        },
+        "-=0.5"
+      );
 
       // Hold in the center
       tl.to({}, { duration: 1 });
 
-      // Fade Out (except for the last step which stays on screen until section unpins)
-      if (i < stepsRef.current.length - 1) {
-        tl.to(step, {
+      // Fade Out (including the last step so it fades out as scrolling finishes)
+      tl.fromTo(
+        step,
+        { opacity: 1, y: 0 },
+        {
           opacity: 0,
-          y: -30, // move up slightly as it fades out
+          y: -30,
           duration: 1,
           ease: "power2.in",
-        });
-      }
-    });
+          immediateRender: false,
+        }
+      );
+    }
 
   }, { scope: containerRef });
 
@@ -111,7 +140,9 @@ export default function HowTherapyWorksSection() {
               ref={(el) => {
                 if (el) stepsRef.current[i] = el;
               }}
-              className="absolute inset-0 flex flex-col items-center justify-center text-center"
+              className={`absolute inset-0 flex flex-col items-center justify-center text-center ${
+                i === 0 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}
             >
               <div className="relative w-[22rem] h-[22rem] md:w-[28rem] md:h-[28rem] mb-8">
                 <Image src={item.image} alt={item.title} fill className="object-contain" sizes="(max-width: 768px) 352px, 448px" />

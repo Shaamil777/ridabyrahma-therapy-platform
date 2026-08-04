@@ -1,20 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { navLinks } from "@/app/data/navigation";
+import Navbar from "@/app/components/layout/Navbar";
 
 export default function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   // 1. Detect when global loading has completed
   useEffect(() => {
@@ -127,60 +120,7 @@ export default function HeroSection() {
       {/* ═══════════════════════════════════════
           TOP NAVBAR — Minimal European Editorial Bar
           ═══════════════════════════════════════ */}
-      <header className="w-full px-6 sm:px-12 lg:px-16 py-6 sm:py-8 flex items-center justify-between z-20">
-        {/* Left: Monogram Logo & Primary Links */}
-        <div className="flex items-center gap-8 sm:gap-12">
-          <button
-            onClick={() => scrollToSection("home")}
-            className="flex items-center gap-2 group cursor-pointer"
-          >
-            <span
-              className="text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight text-[#5A6B56] group-hover:text-[#8C5A3E] transition-colors"
-              style={{ fontFamily: "var(--font-cormorant-garamond)" }}
-            >
-              Riḍā
-            </span>
-          </button>
-
-          <nav className="hidden md:flex items-center gap-7 lg:gap-9 text-base sm:text-lg md:text-xl font-cormorant font-normal text-[#5A6B56] tracking-wide">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => scrollToSection(link.id)}
-                className="hover:text-[#8C5A3E] transition-colors cursor-pointer"
-              >
-                {link.label}
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        {/* Center: Philosophy Title (like "Word of the day / Discovery") */}
-        <div className="hidden lg:flex flex-col items-center text-center">
-          <span
-            className="text-base sm:text-lg italic text-[#8C5A3E] font-normal leading-tight"
-            style={{ fontFamily: "var(--font-cormorant-garamond)" }}
-          >
-            Philosophy of care
-          </span>
-          <span
-            className="text-lg sm:text-xl md:text-2xl text-[#5A6B56] font-normal tracking-wider"
-            style={{ fontFamily: "var(--font-cormorant-garamond)" }}
-          >
-            Sanctuary
-          </span>
-        </div>
-
-        {/* Right: Pill CTA Button */}
-        <div>
-          <button
-            onClick={() => scrollToSection("contact")}
-            className="bg-[#6A7C64] hover:bg-[#5A6B56] text-[#FAF8F5] px-7 sm:px-8 py-3 sm:py-3.5 rounded-full text-sm sm:text-base font-cormorant font-medium tracking-wide transition-colors shadow-sm cursor-pointer"
-          >
-            Get in touch
-          </button>
-        </div>
-      </header>
+      <Navbar />
 
       {/* ═══════════════════════════════════════
           CENTER EDITORIAL AREA
@@ -213,25 +153,25 @@ export default function HeroSection() {
           <div className="md:col-span-6 md:col-start-7 flex flex-col items-center md:items-start text-center md:text-left">
             {/* Delicate Arch SVG Line */}
             <svg
-              width="110"
-              height="16"
-              viewBox="0 0 110 16"
+              width="160"
+              height="22"
+              viewBox="0 0 140 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="text-[#5A6B56]/50 mb-2"
+              className="text-[#5A6B56]/60 mb-2.5 sm:mb-3 w-36 sm:w-44 md:w-52 h-auto"
             >
               <path
-                d="M1 14C25 3 85 3 109 14"
+                d="M2 18C35 3 105 3 138 18"
                 stroke="currentColor"
-                strokeWidth="0.8"
+                strokeWidth="1"
                 strokeLinecap="round"
               />
             </svg>
             <p
-              className="text-xs sm:text-sm text-[#5A6B56]/80 leading-relaxed max-w-xs font-normal"
+              className="text-base sm:text-lg md:text-xl text-[#5A6B56]/85 leading-relaxed max-w-sm font-normal"
               style={{ fontFamily: "var(--font-cormorant-garamond)" }}
             >
-              For emotional liberation, holistic healing, and reconnecting with yourself.
+              For emotional well-being,<br /> and reconnecting with yourself.
             </p>
           </div>
         </div>
@@ -257,7 +197,7 @@ export default function HeroSection() {
             preload="auto"
             onEnded={handleVideoEnded}
             onLoadedMetadata={handleLoadedMetadata}
-            className="w-full h-full object-cover opacity-90"
+            className="w-full h object-cover opacity-90"
           />
         </div>
 

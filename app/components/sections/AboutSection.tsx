@@ -79,7 +79,7 @@ export default function AboutSection() {
               fontFamily: "var(--font-cormorant-garamond)",
             }}
           >
-            A Sanctuary for <br className="hidden md:block" />
+            A Space for <br className="hidden md:block" />
             <span className="italic" style={{ color: "var(--accent)" }}>
               Inner Healing
             </span>
@@ -95,6 +95,9 @@ export default function AboutSection() {
             <p>
               Through personalized care and accessible online consultations, we help individuals navigate challenges, build resilience, and move toward greater emotional well-being.
             </p>
+             <p>
+                At Riḍā by Rahma, we are committed to creating a safe and compassionate space where individuals can explore their thoughts, overcome challenges, and build a healthier relationship with themselves. Every session is guided by empathy, evidence-based practice, and a deep respect for each person's unique journey.
+              </p>
           </div>
         </FadeIn>
       </div>
@@ -112,9 +115,7 @@ export default function AboutSection() {
               <p>
                 Riḍā is an Arabic word that embodies contentment, acceptance, and inner peace. It reflects the belief that true well-being comes not from the absence of struggle, but from developing the strength, understanding, and support needed to navigate it.
               </p>
-              <p>
-                At Riḍā by Rahma, we are committed to creating a safe and compassionate space where individuals can explore their thoughts, overcome challenges, and build a healthier relationship with themselves. Every session is guided by empathy, evidence-based practice, and a deep respect for each person's unique journey.
-              </p>
+             
             </div>
           </FadeIn>
         </div>
@@ -122,4 +123,4 @@ export default function AboutSection() {
 
     </section>
   );
-}
+}
