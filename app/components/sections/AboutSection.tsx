@@ -36,7 +36,7 @@ function ScrollRevealRida() {
           WebkitFontSmoothing: "antialiased",
           backfaceVisibility: "hidden",
         }}
-        className="text-[22vw] md:text-[18vw] leading-none font-medium select-none transform-gpu drop-shadow-sm"
+        className="text-[22vw] md:text-[18vw] lg:text-[14vw] leading-none font-medium select-none transform-gpu drop-shadow-sm"
       >
         Ridā
       </motion.h2>

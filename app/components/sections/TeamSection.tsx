@@ -149,7 +149,7 @@ export default function TeamSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           
           <div 
-            className="relative w-full max-w-[450px] mx-auto lg:mx-0 h-[400px] md:h-[550px]" 
+            className="relative w-full max-w-[450px] mx-auto lg:mx-0 h-[400px] md:h-[550px] lg:h-[420px] xl:h-[500px]" 
             style={{ perspective: "1000px" }}
             ref={imageContainerRef}
           >

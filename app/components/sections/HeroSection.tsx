@@ -127,7 +127,7 @@ export default function HeroSection() {
           className="w-full text-center font-normal text-[#5A6B56] tracking-tight leading-[0.9] select-none"
           style={{
             fontFamily: "var(--font-cormorant-garamond)",
-            fontSize: "clamp(3.8rem, 11vw, 9rem)",
+            fontSize: "clamp(3.5rem, 8.5vw, 7.5rem)",
           }}
         >
           Rida By Rahma

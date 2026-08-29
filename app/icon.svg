@@ -1,18 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Premium Dark Background -->
-  <rect width="512" height="512" rx="110" fill="#131313" />
+  <!-- Calm, airy background -->
+  <rect width="512" height="512" rx="256" fill="#FDFCFB" />
   
-  <!-- Outer delicate rings -->
-  <circle cx="256" cy="256" r="180" stroke="#D4AF37" stroke-width="4" fill="none" opacity="0.3" />
-  <circle cx="256" cy="256" r="160" stroke="#D4AF37" stroke-width="1.5" fill="none" opacity="0.6" />
+  <!-- Subtle minimal border -->
+  <circle cx="256" cy="256" r="236" stroke="#EAE6DF" stroke-width="6" fill="none" />
   
-  <!-- Lotus/Mind abstract shape -->
-  <path d="M256 120 C 310 200, 380 230, 256 380 C 132 230, 202 200, 256 120 Z" fill="#D4AF37" opacity="0.15" />
-  <path d="M256 160 C 290 220, 330 240, 256 330 C 182 240, 222 220, 256 160 Z" fill="#D4AF37" opacity="0.2" />
-  
-  <!-- Elegant 'R' -->
-  <text x="256" y="340" font-family="'Cormorant Garamond', 'Playfair Display', Georgia, serif" font-size="220" font-weight="400" font-style="italic" fill="#E8E5DD" text-anchor="middle">R</text>
-  
-  <!-- Small dot under R to represent the 'ḍ' in Riḍā -->
-  <circle cx="256" cy="375" r="10" fill="#D4AF37" />
+  <!-- Clean, serene typography -->
+  <text x="256" y="355" font-family="'Cormorant Garamond', 'Didot', Georgia, serif" font-size="290" font-weight="400" fill="#4A4843" text-anchor="middle">R</text>
 </svg>

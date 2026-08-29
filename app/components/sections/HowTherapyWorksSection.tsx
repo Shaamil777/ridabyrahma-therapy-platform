@@ -134,7 +134,7 @@ export default function HowTherapyWorksSection() {
           Main Focus Area 
           This container holds all the steps stacked on top of each other exactly in the center.
         */}
-        <div className="relative w-full max-w-3xl mx-auto h-[750px] md:h-[850px]">
+        <div className="relative w-full max-w-3xl mx-auto h-[550px] md:h-[650px] lg:h-[75vh] lg:min-h-[550px] lg:max-h-[750px]">
           {therapySteps.map((item, i) => (
             <div 
               key={i} 
@@ -145,8 +145,8 @@ export default function HowTherapyWorksSection() {
                 i === 0 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
             >
-              <div className="relative w-[22rem] h-[22rem] md:w-[28rem] md:h-[28rem] mb-8">
-                <Image src={item.image} alt={item.title} fill className="object-contain" sizes="(max-width: 768px) 352px, 448px" />
+              <div className="relative w-[22rem] h-[22rem] md:w-[28rem] md:h-[28rem] lg:w-[24rem] lg:h-[24rem] mb-8">
+                <Image src={item.image} alt={item.title} fill className="object-contain" sizes="(max-width: 768px) 352px, (max-width: 1024px) 448px, 384px" />
               </div>
               <h3 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: "var(--primary)", fontFamily: "var(--font-cormorant-garamond)" }}>{item.title}</h3>
               <p className="text-lg md:text-xl leading-relaxed max-w-lg mx-auto" style={{ color: "var(--text-secondary)" }}>{item.description}</p>
