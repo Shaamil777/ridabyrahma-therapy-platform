@@ -24,21 +24,21 @@ function ScrollRevealRida() {
   const opacity = useTransform(smoothProgress, [0, 1], [0.2, 1]);
 
   return (
-    <div ref={ref} className="relative w-full flex justify-center pt-12 md:pt-20 pb-4 overflow-hidden">
+    <div ref={ref} className="relative w-full flex justify-center pt-0 md:pt-4 pb-4 -mt-10 md:-mt-16 overflow-hidden">
       <motion.h2
         style={{
           clipPath,
           y,
           opacity,
-          color: "var(--primary)",
+          color: "#4A4A4A",
           fontFamily: "var(--font-cormorant-garamond)",
           willChange: "transform, opacity",
           WebkitFontSmoothing: "antialiased",
           backfaceVisibility: "hidden",
         }}
-        className="text-[28vw] md:text-[25vw] leading-none font-bold tracking-tighter select-none transform-gpu"
+        className="text-[22vw] md:text-[18vw] leading-none font-medium select-none transform-gpu drop-shadow-sm"
       >
-        RIDA
+        Ridā
       </motion.h2>
     </div>
   );
@@ -90,7 +90,7 @@ export default function AboutSection() {
             style={{ color: "var(--text-secondary)" }}
           >
             <p>
-              At Riḍā by Rahma, we believe that everyone deserves access to compassionate and professional mental health support. Led by Clinical Psychologist Rahma, our team provides evidence-based therapy and psychological services in a safe, confidential, and supportive environment.
+              At Riḍā by Rahma, we believe that everyone deserves access to compassionate and professional mental health support. Led by Clinical Psychologist Rahmath, our team provides evidence-based therapy and psychological services in a safe, confidential, and supportive environment.
             </p>
             <p>
               Through personalized care and accessible online consultations, we help individuals navigate challenges, build resilience, and move toward greater emotional well-being.

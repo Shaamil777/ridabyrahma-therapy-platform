@@ -165,7 +165,7 @@ export default function TeamSection() {
             ))}
           </div>
 
-          <div className="flex flex-col justify-start w-full lg:max-w-md">
+          <div className="flex flex-col justify-start w-full lg:max-w-xl">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
@@ -189,6 +189,19 @@ export default function TeamSection() {
                   {activeMember.role}
                 </p>
 
+                {activeMember.qualification && (
+                  <div className="flex flex-col mb-8 pt-2">
+                    <div className="flex flex-col gap-1.5 flex-1">
+                      <span className="text-[10px] uppercase tracking-widest font-bold text-[var(--text-secondary)]">
+                        Qualifications
+                      </span>
+                      <span className="text-[13px] md:text-[14px] font-medium text-[var(--primary)] leading-snug">
+                        {activeMember.qualification}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex flex-wrap gap-2 mb-6">
                   {activeMember.specialties.map((s, idx) => (
                     <span key={idx} className="px-4 py-2 border border-black/10 bg-black/5 rounded-full text-[10px] uppercase font-semibold tracking-widest text-[#1f1f1f]">
@@ -203,21 +216,31 @@ export default function TeamSection() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-                >
-                  {activeMember.fullBio}
-                </motion.p>
+                  dangerouslySetInnerHTML={{ __html: activeMember.fullBio }}
+                />
 
-                <div className="flex gap-6 md:gap-8">
+                <div className="flex flex-wrap gap-6 md:gap-10 items-end">
                   {activeMember.achievements.map((a, idx) => (
-                    <div key={idx} className="flex flex-col items-center text-center">
-                      <span className="text-2xl md:text-3xl font-bold text-[var(--primary)]" style={{ fontFamily: "var(--font-cormorant-garamond)" }}>
+                    <div key={idx} className="flex flex-col items-start md:items-center text-left md:text-center">
+                      <span className="text-2xl md:text-3xl font-bold text-[var(--primary)] leading-none" style={{ fontFamily: "var(--font-cormorant-garamond)" }}>
                         {a.value}
                       </span>
-                      <span className="text-[10px] md:text-xs uppercase tracking-widest mt-1" style={{ color: "var(--text-secondary)" }}>
+                      <span className="text-[10px] md:text-xs uppercase tracking-widest mt-2" style={{ color: "var(--text-secondary)" }}>
                         {a.label}
                       </span>
                     </div>
                   ))}
+                  
+                  {activeMember.language && (
+                    <div className="flex flex-col items-start md:items-center text-left md:text-center md:pl-8 md:border-l border-[var(--border-subtle)]">
+                      <span className="text-[15px] md:text-[18px] font-bold text-[var(--primary)] whitespace-nowrap leading-tight" style={{ fontFamily: "var(--font-cormorant-garamond)" }}>
+                        {activeMember.language}
+                      </span>
+                      <span className="text-[10px] md:text-xs uppercase tracking-widest mt-2" style={{ color: "var(--text-secondary)" }}>
+                        Languages
+                      </span>
+                    </div>
+                  )}
                 </div>
 
               </motion.div>

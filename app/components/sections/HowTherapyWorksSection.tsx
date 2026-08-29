@@ -50,10 +50,11 @@ export default function HowTherapyWorksSection() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: "center center",
+          start: "top top",
           end: "+=150%", // Much shorter scroll distance for faster animation
           pin: true,
           scrub: 1, 
+          anticipatePin: 1,
         }
       });
 
@@ -121,7 +122,7 @@ export default function HowTherapyWorksSection() {
     <section
       id="how-therapy-works"
       ref={containerRef}
-      className="relative overflow-clip min-h-screen flex flex-col justify-center"
+      className="relative min-h-screen flex flex-col justify-center"
       style={{
         background: "var(--background)",
       }}

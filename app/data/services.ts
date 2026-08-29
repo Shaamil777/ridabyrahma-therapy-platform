@@ -27,7 +27,7 @@ export const services: Service[] = [
     shortDescription: "Professional support from the comfort of your home.",
     description:
       "Access professional support from the comfort of your home with our secure and confidential teletherapy platform.",
-    image: "/services/online-consultation.webp",
+    image: "/services/online-consultation-new.webp",
   },
   {
     title: "CHILD & TEEN THERAPY",

@@ -50,18 +50,18 @@ export default function Footer() {
               Support & Contact
             </h4>
             <ul className="flex flex-col gap-3.5">
-              <li className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-[var(--surface)] border border-[var(--border-subtle)] flex items-center justify-center shrink-0">
-                  <Icon name="phone" className="w-3 h-3 text-[var(--accent)]" strokeWidth={1.5} />
+              <a href="https://wa.me/918714808571?text=I%20would%20like%20to%20book%20a%20session" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 group">
+                <div className="w-6 h-6 rounded-full bg-[var(--surface)] border border-[var(--border-subtle)] flex items-center justify-center shrink-0 transition-colors group-hover:bg-[#25D366] group-hover:border-[#25D366]">
+                  <Icon name="phone" className="w-3 h-3 text-[var(--accent)] group-hover:text-white" strokeWidth={1.5} />
                 </div>
-                <span className="text-xs font-medium text-[var(--text-secondary)]">Book via WhatsApp</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-[var(--surface)] border border-[var(--border-subtle)] flex items-center justify-center shrink-0">
-                  <Icon name="email" className="w-3 h-3 text-[var(--accent)]" />
+                <span className="text-xs font-medium text-[var(--text-secondary)] group-hover:text-[var(--primary)] transition-colors">Book via WhatsApp</span>
+              </a>
+              <a href="mailto:ridabyrahma@gmail.com" className="flex items-center gap-3 group">
+                <div className="w-6 h-6 rounded-full bg-[var(--surface)] border border-[var(--border-subtle)] flex items-center justify-center shrink-0 transition-colors group-hover:bg-[var(--accent)] group-hover:border-[var(--accent)]">
+                  <Icon name="email" className="w-3 h-3 text-[var(--accent)] group-hover:text-white" />
                 </div>
-                <span className="text-xs font-medium text-[var(--text-secondary)]">Email Support</span>
-              </li>
+                <span className="text-xs font-medium text-[var(--text-secondary)] group-hover:text-[var(--primary)] transition-colors">ridabyrahma@gmail.com</span>
+              </a>
               <li className="flex items-center gap-3">
                 <div className="w-6 h-6 rounded-full bg-[var(--surface)] border border-[var(--border-subtle)] flex items-center justify-center shrink-0">
                   <Icon name="video" className="w-3 h-3 text-[var(--accent)]" />
@@ -89,7 +89,7 @@ export default function Footer() {
             &copy; {currentYear} Riḍā by Rahma. All Rights Reserved.
           </p>
           <div className="text-[11px] font-medium text-[var(--text-muted-color)]">
-            Developed by <a href="#" className="text-[var(--accent)] hover:text-[var(--primary)] transition-colors underline-offset-4 hover:underline">Shaamil</a>
+            Developed by <a href="https://muhammadshamil.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:text-[var(--primary)] transition-colors underline-offset-4 hover:underline">Shaamil</a>
           </div>
         </div>
       </div>

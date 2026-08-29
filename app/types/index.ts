@@ -28,6 +28,8 @@ export interface TeamMember {
   fullBio: string;
   specialties: string[];
   education: string;
+  qualification?: string;
+  language?: string;
   achievements: { label: string; value: string }[];
 }
 

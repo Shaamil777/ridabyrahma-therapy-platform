@@ -65,16 +65,11 @@ export default function HeroSection() {
     if (!video) return;
 
     if (isLoaded && isInView) {
-      try {
-        if (video.readyState >= 1) {
-          video.currentTime = 0;
-        }
-      } catch {
-        // Ignore if metadata is not ready yet
+      if (!video.ended) {
+        video.play().catch((err) => {
+          console.log("Video autoplay prevented:", err);
+        });
       }
-      video.play().catch((err) => {
-        console.log("Video autoplay prevented:", err);
-      });
     } else if (!isInView) {
       video.pause();
     }
@@ -82,8 +77,9 @@ export default function HeroSection() {
 
   const handleLoadedMetadata = () => {
     if (isLoaded && isInView && videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play().catch(() => {});
+      if (!videoRef.current.ended) {
+        videoRef.current.play().catch(() => {});
+      }
     }
   };
 
@@ -145,7 +141,7 @@ export default function HeroSection() {
               className="text-xl sm:text-2xl md:text-3xl text-[#5A6B56] font-normal tracking-wide"
               style={{ fontFamily: "var(--font-cormorant-garamond)" }}
             >
-              Psychiatry &amp; Wellness
+              Mental Health and Wellbeing
             </p>
           </div>
 
@@ -174,6 +170,25 @@ export default function HeroSection() {
               For emotional well-being,<br /> and reconnecting with yourself.
             </p>
           </div>
+        </div>
+
+        {/* ═══════════════════════════════════════
+            CTA BUTTONS
+            ═══════════════════════════════════════ */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-12 sm:mt-16 w-full z-30">
+          <a
+            href="#contact"
+            className="group relative px-8 py-4 bg-[#5A6B56] text-[#FAF8F5] rounded-full text-xs sm:text-sm tracking-[0.2em] uppercase transition-all duration-500 font-medium w-full sm:w-auto text-center shadow-[0_8px_30px_rgba(90,107,86,0.12)] hover:shadow-[0_8px_30px_rgba(90,107,86,0.24)] hover:-translate-y-1 overflow-hidden"
+          >
+            <span className="relative z-10">Book a Session</span>
+            <div className="absolute inset-0 h-full w-full bg-[#465443] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-in-out origin-left"></div>
+          </a>
+          <a
+            href="#about"
+            className="px-8 py-4 bg-transparent text-[#5A6B56] border border-[#5A6B56]/30 rounded-full text-xs sm:text-sm tracking-[0.2em] uppercase hover:border-[#5A6B56] hover:bg-[#5A6B56]/5 transition-all duration-500 font-medium w-full sm:w-auto text-center hover:-translate-y-1"
+          >
+            Discover More
+          </a>
         </div>
       </div>
 

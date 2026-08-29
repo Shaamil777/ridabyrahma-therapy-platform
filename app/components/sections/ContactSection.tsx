@@ -47,26 +47,26 @@ export default function ContactSection() {
                {/* Contact Options */}
                <div>
                   <h4 className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] mb-5 text-black/40">Contact Options</h4>
-                  <ul className="space-y-4">
-                    <li className="flex items-center gap-3 group cursor-pointer">
+                  <div className="space-y-4 flex flex-col">
+                    <a href="tel:+918714808571" className="flex items-center gap-3 group cursor-pointer w-fit">
                       <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors group-hover:bg-[var(--accent)] group-hover:text-white" style={{ backgroundColor: "var(--secondary-bg)", color: "var(--primary)" }}>
                         <Icon name="phone" className="w-4 h-4" strokeWidth={1.5} />
                       </div>
-                      <span className="text-sm font-medium transition-colors" style={{ color: "var(--primary)" }}>+1 (800) 123-4567</span>
-                    </li>
-                    <li className="flex items-center gap-3 group cursor-pointer">
+                      <span className="text-sm font-medium transition-colors" style={{ color: "var(--primary)" }}>+91 8714808571</span>
+                    </a>
+                    <a href="https://wa.me/918714808571?text=I%20would%20like%20to%20book%20a%20session" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 group cursor-pointer w-fit">
                       <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors group-hover:bg-[#25D366] group-hover:text-white" style={{ backgroundColor: "var(--secondary-bg)", color: "var(--primary)" }}>
                         <Icon name="whatsapp" className="w-5 h-5" />
                       </div>
                       <span className="text-sm font-medium transition-colors" style={{ color: "var(--primary)" }}>WhatsApp Us</span>
-                    </li>
-                    <li className="flex items-center gap-3 group cursor-pointer">
+                    </a>
+                    <a href="mailto:ridabyrahma@gmail.com" className="flex items-center gap-3 group cursor-pointer w-fit">
                       <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors group-hover:bg-[var(--accent)] group-hover:text-white" style={{ backgroundColor: "var(--secondary-bg)", color: "var(--primary)" }}>
                         <Icon name="email" className="w-4 h-4" />
                       </div>
-                      <span className="text-sm font-medium transition-colors" style={{ color: "var(--primary)" }}>care@ridabyrahma.com</span>
-                    </li>
-                  </ul>
+                      <span className="text-sm font-medium transition-colors" style={{ color: "var(--primary)" }}>ridabyrahma@gmail.com</span>
+                    </a>
+                  </div>
                </div>
 
                {/* Availability */}
@@ -131,13 +131,15 @@ export default function ContactSection() {
                    Fill out the quick form below and we&apos;ll get back to you shortly.
                  </p>
 
-                 <form className="space-y-5">
+                 <form action="https://formsubmit.co/ridabyrahma@gmail.com" method="POST" className="space-y-5">
                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                      <div className="space-y-1.5">
                        <label htmlFor="contact-name" className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] pl-1" style={{ color: "var(--primary)" }}>Full Name</label>
                        <input 
                          id="contact-name"
+                         name="name"
                          type="text" 
+                         required
                          className="w-full bg-[var(--background)] border border-[var(--border-subtle)] rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all placeholder:text-black/20" 
                          placeholder="Jane Doe" 
                        />
@@ -146,7 +148,9 @@ export default function ContactSection() {
                        <label htmlFor="contact-email" className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] pl-1" style={{ color: "var(--primary)" }}>Email Address</label>
                        <input 
                          id="contact-email"
+                         name="email"
                          type="email" 
+                         required
                          className="w-full bg-[var(--background)] border border-[var(--border-subtle)] rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all placeholder:text-black/20" 
                          placeholder="jane@example.com" 
                        />
@@ -157,9 +161,10 @@ export default function ContactSection() {
                      <label htmlFor="contact-phone" className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] pl-1" style={{ color: "var(--primary)" }}>Phone Number (Optional)</label>
                      <input 
                        id="contact-phone"
+                       name="phone"
                        type="tel" 
                        className="w-full bg-[var(--background)] border border-[var(--border-subtle)] rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all placeholder:text-black/20" 
-                       placeholder="+1 (555) 000-0000" 
+                       placeholder="+91 00000 00000" 
                      />
                    </div>
 
@@ -167,6 +172,8 @@ export default function ContactSection() {
                      <label htmlFor="contact-message" className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] pl-1" style={{ color: "var(--primary)" }}>How can we help?</label>
                      <textarea 
                        id="contact-message"
+                       name="message"
+                       required
                        rows={4} 
                        className="w-full bg-[var(--background)] border border-[var(--border-subtle)] rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all resize-none placeholder:text-black/20" 
                        placeholder="Briefly describe what's on your mind..."
@@ -174,7 +181,7 @@ export default function ContactSection() {
                    </div>
 
                    <button 
-                     type="button" 
+                     type="submit" 
                      className="w-full mt-2 bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)] font-bold tracking-[0.15em] uppercase text-[10px] sm:text-[11px] py-4 rounded-xl transition-colors shadow-lg shadow-black/10 flex justify-center items-center gap-2"
                    >
                      Send Message
